@@ -3,7 +3,7 @@
 Lemonia @CF_IS_HERE
 Under CC BY-NC-ND 4.0
 
-A classic shoot 'em up game with challenges to the conventional playstyle that sometimes ask shooter NOT to shoot. The objective is to face wave of enemy that steals from player. Player need to keep a distance and defeat all. This game puts player on a journey to explorer their choices while reflect the real world struggle that anyone could expeirence. It hopes to encourage people and puts a smile at the end of the day for anyone expeirenced or currently going through this very nasty situation. Inspired by a true story. 
+A classic shoot 'em up game with challenges to the conventional playstyle that sometimes ask shooter NOT to shoot. The objective is to face wave of enemy that steals from player. Player need to keep a distance and stops them by shooting. From time to time a friendly unit enters and should be protected instead. This game puts player on a journey to explorer their choices while reflect the real world struggle that anyone could expeirence. It hopes to encourage people, puts a smile at the end of the day for anyone expeirenced or currently going through this similar situation. Inspired by a true story. 
 
 Future development plans
 =======
@@ -39,11 +39,11 @@ Future development plans
       
   - **Enemy that taughts**
       
-      it laughs but does nothing. If player touch it it will still harm the player
+      It laughs and stands still on the side of the screen. Does nothing else. If player touch it it will still harm the player
       
   - **Enemy that sings**
       
-      It changes the music tone to all weird but nothing else. If player touch it it will still harm the player
+      It hanges the music tone and stands still on the side of the screen. Does nothing else. If player touch it it will still harm the player
       
   - **Massive waves of enemy**
       
@@ -51,7 +51,7 @@ Future development plans
       
   - **Shooter itself**
       
-      Another shooter that looks just like the player without weapon and walks slower towards player. If player kills it then an explotion will happen and reset the stage and score. If you manage to keep it alive and kills other enemy after countdown then it will shake your hand (play a sprite scene) and give you a *confident boost*. While having this *confident boost*, the player will then face massive waves of spawned enemy and becomes invisible for 3 seconds. enermy that touched it will explode (mario super star). 
+      Another shooter that looks just like the player without weapon and walks slower towards player. If player kills it then an explotion will happen and reset the stage and score (player keeps the weapon and the enmey difficulty). If player manage to keep another self alive and kills other enemy, then after countdown he will walk towards you and give you a hug (play a sprite scene) this gives you a *confident boost*. While having this *confident boost*, the player will then face massive waves of enemy spawned to the field and becomes invisible for 5 seconds. enermy that touched it will explode (mario super star). 
       
       
 - **Misc** :
