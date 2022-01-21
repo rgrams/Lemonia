@@ -3,12 +3,12 @@
 Lemonia @CF_IS_HERE
 Under CC BY-NC-ND 4.0
 
-A shoot 'em up game. The game puts you on a challenge facing waves of enemy. Player need to keep a distance and defeat all of them to prevent enemy stealing from the player. The game puts player on a journey to explorer their choices while reflect the real world struggle anyone could expeirence. It hopes to encourage and puts a smile for people expeirenced or currently going through. Inspired by a true story. 
+A classic shoot 'em up game with challenges to the conventional playstyle that sometimes ask shooter NOT to shoot. The objective is to face wave of enemy that steals from player. Player need to keep a distance and defeat all. This game puts player on a journey to explorer their choices while reflect the real world struggle that anyone could expeirence. It hopes to encourage people and puts a smile at the end of the day for anyone expeirenced or currently going through this very nasty situation. Inspired by a true story. 
 
 Future development plans
 =======
 - **Friendly Units** :
-    Different appearance of friendly unit sprite, that walks into the battlefield and drops a special item for player to pick up and use. This can include items such as the following. The item will disappear if not picked up on time. If the friendly unit is hit, then it will use that item against player. The enemy on the map will then stand still and spread away as player move through them on the scene and taught at the player. Enemy are invisible at this stage and only be able to get killed once the friendly unit stops after countedown and then angeryly and walks off for player to resume the fight with the lemon. If player kills the friendly unit, the items they carry will never appear again. 
+    Different appearance of friendly unit, that walks into the battlefield and drops a special item for player to pick up and use. This can include items such as the following list. The item will disappear if not picked up on time. If the friendly unit is hit by player, then unit will use that item against player. The enemy on the map will then stand still and spread away as player move through them on the scene and taught at the player. Enemy are invisible at this stage and only be able to get killed once the friendly unit stops after countdown and then angeryly walks off for player to resume the fight with the enemy. If player kills their friendly unit, the items they carry will never appear again. Different kind of blood stains on the field. 
    - **Samurai sword** (1 time ultimate)
       
       When this appears, a large wave of enemy will also enters the scene.
