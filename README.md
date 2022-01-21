@@ -30,7 +30,7 @@ Development plans
       
    - **Two guns** (perm)
       
-      An additional gun that mirrors the shot of where the cursor is pointing at
+      An additional gun that mirrors the shot at the opposite angle of where the cursor is pointing at
   
 - **Enemy types** :
      More variety of Enemy that does different things such as:
