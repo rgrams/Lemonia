@@ -3,7 +3,7 @@
 Lemonia @CF_IS_HERE
 Under CC BY-NC-ND 4.0
 
-A shoot 'em up game. The game puts you on a challenge facing waves of enemy. Player need to keep a distance and defeat all of them to prevent enemy stealing from the player. The game puts player on a journey to enjoy while reflect the real world struggle anyone could expeirence. Inspired by a true story. 
+A shoot 'em up game. The game puts you on a challenge facing waves of enemy. Player need to keep a distance and defeat all of them to prevent enemy stealing from the player. The game puts player on a journey to explorer their choices while reflect the real world struggle anyone could expeirence. It hopes to encourage and puts a smile for people expeirenced or currently going through. Inspired by a true story. 
 
 Future development plans
 =======
@@ -51,7 +51,7 @@ Future development plans
       
   - **Shooter itself**
       
-      Another shooter that looks just like the player. If player kills it then a explotion will happen and reset the stage and score. If you manage to keep it alive and kills other enemy after countdown then it will shake your hand (play a sprite scene) and give you a *confident boost*. While having this *confident boost*, the player will then face massive waves of spawned enemy and becomes invisible for 3 seconds. enermy that touched it will explode (mario super star). 
+      Another shooter that looks just like the player without weapon and walks slower towards player. If player kills it then an explotion will happen and reset the stage and score. If you manage to keep it alive and kills other enemy after countdown then it will shake your hand (play a sprite scene) and give you a *confident boost*. While having this *confident boost*, the player will then face massive waves of spawned enemy and becomes invisible for 3 seconds. enermy that touched it will explode (mario super star). 
       
       
 - **Misc** :
@@ -70,5 +70,9 @@ Future development plans
       
   - **Confetti**
       
-      For every 10,000 score, a confetti will play in the screen
+      For every 10,000 score, a confetti will spread across the whole screen
+      
+  - **Night scene**
+      
+      Switches the scene from day to night from time to time. during night time, the bullet becomes a light source and lights up the stage. everything else will be darker. 
       
