@@ -10,7 +10,7 @@ I'm an designer/artist and I'm looking for a developer to help me implement the 
 Development plans
 =======
 - **Friendly Units** :
-    Different appearance of friendly unit, that walks into the battlefield and drops a special item for player to pick up and use. This can include items such as the following list. The item will disappear if not picked up on time. If the friendly unit is hit by player, then unit will use that item against player. The enemy on the map will then stand still and spread away as player move through them on the scene and taught at the player. Enemy are invisible at this stage and only be able to get killed once the friendly unit stops after countdown and then angeryly walks off for player to resume the fight with the enemy. If player kills their friendly unit, the items they carry will never appear again. Different kind of blood stains on the field. 
+    Different appearance of friendly unit, that walks into the battlefield and drops a special item for player to pick up and use. This can include items such as the following list. The item will disappear if not picked up after 20 seconds. If the friendly unit is hit by player, then unit will use that item against player. The enemy on the map will then stand still and spread away as player move through them on the scene and taught at the player. Enemy are invisible at this stage and only be able to get killed once the friendly unit stops after countdown and then angeryly walks off for player to resume the fight with the enemy. If player kills their friendly unit, the items they carry will never appear again. Different kind of blood stains on the field. 
    - **Samurai sword** (1 time ultimate)
       
       When this appears, a large wave of enemy will also enters the scene.
