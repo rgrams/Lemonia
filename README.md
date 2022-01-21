@@ -14,7 +14,7 @@ Development plans
    - **Samurai sword** (1 time ultimate)
       
       When this appears, a large wave of enemy will also enters the scene.
-      https://imgur.com/9dHFVT9 here's a link to how it would work. it last for 5 seconds and user can do as many hit as they like.
+      https://imgur.com/9dHFVT9 here's a link to how it would work. It last for 5 seconds and player can do as many hit as they like.
 
    - **Shotgun** 
       
