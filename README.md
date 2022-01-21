@@ -3,7 +3,7 @@
 Lemonia @CF_IS_HERE
 Under CC BY-NC-ND 4.0
 
-A shoot them up game. The game puts you on a challenge facing waves of lemons. Player need to keep a distance and defeat all of them to prevent them stealing from the player. Inspired by a true story. 
+A shoot them up game. The game puts you on a challenge facing waves of lemons. Player need to keep a distance and defeat all of them to prevent them stealing from the player. The game puts player on a journey to enjoy while reflect the real world struggle anyone could expeirence. Inspired by a true story. 
 
 Future development plans
 =======
