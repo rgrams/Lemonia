@@ -1,4 +1,4 @@
-"Lemonia (Tempoary title)" 
+"Lemonia (Temporary title)" 
 =======
 Lemonia @CF_IS_HERE
 Under CC BY-NC-ND 4.0
