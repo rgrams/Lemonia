@@ -3,7 +3,7 @@
 Lemonia @CF_IS_HERE
 Under CC BY-NC-ND 4.0
 
-A classic shoot 'em up game with challenges to the conventional playstyle that sometimes ask shooter NOT to shoot. The objective is to face wave of enemy that steals from player. Player need to keep a distance and stops them by shooting. From time to time a friendly unit enters and should be protected instead. This game puts player on a journey to explorer their choices while reflect the real world struggle that anyone could expeirence. It hopes to encourage people, puts a smile at the end of the day for anyone expeirenced or currently going through this similar situation. Inspired by a true story. 
+A classic shoot 'em up game with twist to the conventional playstyle - ask shooter choose their target wisely. The objective is to face wave of enemy that steals from player. Player need to keep a distance and stops them by shooting. From time to time a friendly unit enters and should be protected instead. If shot, then bad things can happen. This game puts player on a journey to explorer their choices while reflect the real world struggle that anyone could expeirence. It hopes to encourage people, puts a smile at the end of the day for anyone expeirenced or currently going through this similar situation. Inspired by a true story. 
 
 Future development plans
 =======
