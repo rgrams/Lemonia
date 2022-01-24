@@ -1,17 +1,21 @@
 
-function blankReload()
+local BlankScene = {}
+
+function BlankScene.Reload()
 end
 
-function blankDie()
+function BlankScene.Die()
 end
 
-function blank()
+function BlankScene.Update()
 	-- Reset
-	sceneAt = "blank"
+	local nextScene = "blank"
 
 	setColor(255, 255, 255)
 	clear(255, 20, 255)
 
 	-- Return scene
-	return sceneAt
+	return nextScene
 end
+
+return BlankScene

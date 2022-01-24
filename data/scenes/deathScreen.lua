@@ -1,5 +1,7 @@
 
-function deathScreenReload()
+local DeathScreen = {}
+
+function DeathScreen.Reload()
 	gameLayer = love.graphics.newCanvas(200,150)
 
 	local bOffset = 60
@@ -10,12 +12,12 @@ function deathScreenReload()
 
 end
 
-function deathScreenDie()
+function DeathScreen.Die()
 end
 
-function deathScreen()
+function DeathScreen.Update()
 	-- Reset
-	sceneAt = "deathScreen"
+	local nextScene = "deathScreen"
 	xM = xM * 0.25; yM = yM * 0.25
 
 	love.graphics.setCanvas(gameLayer)
@@ -40,19 +42,14 @@ function deathScreen()
 	love.graphics.print(text, X, Y, 0, 1, 1)
 
 	if xM > BUTTON_AGAIN.x and xM < BUTTON_AGAIN.x + FONT:getWidth(text) and yM > BUTTON_AGAIN.y and yM < BUTTON_AGAIN.y + FONT:getHeight(text) then
-
 		BUTTON_AGAIN.animation = clamp(BUTTON_AGAIN.animation + dt * 4, 0, 1)
 
 		if mouseJustPressed(1) then
-
-			sceneAt = "game"; transition = 1
-
+			nextScene = "game"
+			transition = 1
 		end
-
 	else
-
 		BUTTON_AGAIN.animation = clamp(BUTTON_AGAIN.animation - dt * 4, 0, 1)
-
 	end
 
 	local text = BUTTON_QUIT.text; local X = BUTTON_QUIT.x + BUTTON_QUIT.animation * 12; local Y = BUTTON_QUIT.y
@@ -191,5 +188,7 @@ function deathScreen()
 	love.graphics.draw(gameLayer, 0, 0, 0, 4, 4)
 
 	-- Return scene
-	return sceneAt
+	return nextScene
 end
+
+return DeathScreen

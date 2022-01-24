@@ -1,9 +1,7 @@
 
 local isFullscreen = false
-
-local SCENE_START = 1
-local SCENE_RELOAD = 2
-local SCENE_DIE = 3
+local scenes
+local curScene
 
 -- All global values used in all scenes (display, textures, options, etc.)
 function love.load()
@@ -47,24 +45,18 @@ function love.load()
 	love.mouse.setVisible(false)
 
 	-- Scenes
-	require "data.scenes.blank"
-	require "data.scenes.splashScreen"
-	require "data.scenes.game"
-	require "data.scenes.deathScreen"
-	require "data.scenes.menu"
-
 	scenes = {
-		menu = { menu, menuReload, menuDie },
-		deathScreen = { deathScreen, deathScreenReload, deathScreenDie },
-		game = { game, gameReload, gameDie },
-		splash = { splashScreen, splashScreenReload, splashScreenDie },
-		blank = { blank, blankReload, blankDie }
+		menu = require("data.scenes.menu"),
+		deathScreen = require("data.scenes.deathScreen"),
+		game = require("data.scenes.game"),
+		splash = require("data.scenes.splashScreen"),
+		blank = require("data.scenes.blank")
 	}
 
 	-- Set default scene (the first one)
-	scene = "menu"
+	curScene = "menu"
 	firstScene = "menu"
-	scenes[scene][SCENE_RELOAD]()
+	scenes[curScene].Reload()
 
 	-- Set joysticks
 	JOYSTICKS = love.joystick.getJoysticks()
@@ -112,12 +104,12 @@ function love.draw()
 	love.graphics.clear(0,0,0,1)
 
 	--------------------------------------------------------------------------SCENE CALLED
-	sceneNew = scenes[scene][SCENE_START]()
+	local nextScene = scenes[curScene].Update()
 
-	if sceneNew ~= scene then
-		scenes[scene][SCENE_DIE]()
-		scene = sceneNew
-		scenes[scene][SCENE_RELOAD]()
+	if nextScene ~= curScene then
+		scenes[curScene].Die()
+		curScene = nextScene
+		scenes[curScene].Reload()
 		transition = 1
 	end
 
