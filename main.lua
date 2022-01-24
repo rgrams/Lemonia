@@ -1,6 +1,10 @@
 
 local isFullscreen = false
 
+local SCENE_START = 1
+local SCENE_RELOAD = 2
+local SCENE_DIE = 3
+
 -- All global values used in all scenes (display, textures, options, etc.)
 function love.load()
 	-- Window and defaulting
@@ -48,18 +52,19 @@ function love.load()
 	require "data.scenes.game"
 	require "data.scenes.deathScreen"
 	require "data.scenes.menu"
+
 	scenes = {
 		menu = { menu, menuReload, menuDie },
 		deathScreen = { deathScreen, deathScreenReload, deathScreenDie },
 		game = { game, gameReload, gameDie },
-		["splash"] = { splashScreen, splashScreenReload, splashScreenDie },
-		["blank"] = { blank, blankReload, blankDie }
+		splash = { splashScreen, splashScreenReload, splashScreenDie },
+		blank = { blank, blankReload, blankDie }
 	}
 
 	-- Set default scene (the first one)
 	scene = "menu"
 	firstScene = "menu"
-	scenes[scene][2]()
+	scenes[scene][SCENE_RELOAD]()
 
 	-- Set joysticks
 	JOYSTICKS = love.joystick.getJoysticks()
@@ -107,12 +112,12 @@ function love.draw()
 	love.graphics.clear(0,0,0,1)
 
 	--------------------------------------------------------------------------SCENE CALLED
-	sceneNew = scenes[scene][1]()
+	sceneNew = scenes[scene][SCENE_START]()
 
 	if sceneNew ~= scene then
-		scenes[scene][3]()
+		scenes[scene][SCENE_DIE]()
 		scene = sceneNew
-		scenes[scene][2]()
+		scenes[scene][SCENE_RELOAD]()
 		transition = 1
 	end
 
