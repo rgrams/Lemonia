@@ -3,7 +3,7 @@ function gameReload() -- Loading the scene
     gameLayer = love.graphics.newCanvas(200,150)
     splatLayer = love.graphics.newCanvas(200,150)
     ENEMY_COLORS = {
-        {255/255, 234/255, 50/255}, {166/255, 255/255, 50/255}, {73/255, 242/255, 31/255}
+        {232/255, 193/255, 112/255}, {208/255, 218/255, 145/255}, {223/255, 132/255, 165/255}
         }
 
     love.graphics.setCanvas(splatLayer)
@@ -287,7 +287,7 @@ function game()
                     end
 
                     score = score + 100
-                    table.insert(scoreMessages, {message = "+"..tostring(100), x = E.x, y = E.y - 12, lifetime = 0.8})
+                    table.insert(scoreMessages, {message = ""..tostring(100), x = E.x, y = E.y - 12, lifetime = 0.8})
 
                     --shake(5, 2, 0.1)
 
@@ -422,7 +422,7 @@ function game()
 
         local A = 255 * M.lifetime / 0.8
 
-        setColor(0,0,0,A)
+        setColor(207,87,60,A)
         love.graphics.print(text, X - 1, Y, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
         love.graphics.print(text, X + 1, Y, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
         love.graphics.print(text, X, Y - 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
@@ -433,7 +433,7 @@ function game()
         love.graphics.print(text, X + 1, Y - 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
         love.graphics.print(text, X - 1, Y + 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
 
-        setColor(255,255,0, A)
+        setColor(231,213,179, A)
         love.graphics.print(text, X, Y, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
 
         if M.lifetime < 0 then table.insert(kill, id) end
@@ -449,8 +449,8 @@ function game()
 
         text = "Wave "..tostring(M.wave)
 
-        local X = 100; local Y = 80 * math.abs(math.sin((1 - M.lifetime / 2.5) * 3.14)) - 20
-        setColor(0,0,0,A)
+        local X = 100; local Y = 95 * math.abs(math.sin((1 - M.lifetime / 2.5) * 3.14)) - 20
+        setColor(122,72,65,A)
         love.graphics.print(text, X - 2, Y, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
         love.graphics.print(text, X + 2, Y, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
         love.graphics.print(text, X, Y - 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
@@ -461,7 +461,7 @@ function game()
         love.graphics.print(text, X + 2, Y - 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
         love.graphics.print(text, X - 2, Y + 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
 
-        setColor(255,255,0, A)
+        setColor(231,213,179, A)
         love.graphics.print(text, X, Y, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
 
         if M.lifetime < 0 then table.insert(kill, id) end
@@ -472,19 +472,19 @@ function game()
     local text = tostring(score)
     local X = 4; local Y = 2
 
-    setColor(0,0,0)
-    love.graphics.print(text, X - 2, Y, 0, 2, 2)
-    love.graphics.print(text, X + 2, Y, 0, 2, 2)
-    love.graphics.print(text, X, Y - 2, 0, 2, 2)
-    love.graphics.print(text, X, Y + 2, 0, 2, 2)
+    setColor(129,151,150)
+    love.graphics.print(text, X - 1, Y, 0, 1, 1)
+    love.graphics.print(text, X + 1, Y, 0, 1, 1)
+    love.graphics.print(text, X, Y - 1, 0, 1, 1)
+    love.graphics.print(text, X, Y + 1, 0, 1, 1)
 
-    love.graphics.print(text, X - 2, Y - 2, 0, 2, 2)
-    love.graphics.print(text, X + 2, Y + 2, 0, 2, 2)
-    love.graphics.print(text, X + 2, Y - 2, 0, 2, 2)
-    love.graphics.print(text, X - 2, Y + 2, 0, 2, 2)
+    love.graphics.print(text, X - 1, Y - 1, 0, 1, 1)
+    love.graphics.print(text, X + 1, Y + 1, 0, 1, 1)
+    love.graphics.print(text, X + 1, Y - 1, 0, 1, 1)
+    love.graphics.print(text, X - 1, Y + 1, 0, 1, 1)
 
-    setColor(255,255,255)
-    love.graphics.print(text, X, Y, 0, 2, 2)
+    setColor(235,237,233)
+    love.graphics.print(text, X, Y, 0, 1, 1)
 
     -- MOUSE
     setColor(255, 255, 255)

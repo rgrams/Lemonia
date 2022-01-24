@@ -29,7 +29,7 @@ function menu()
 
     -- BUTTONS
     local text = BUTTON_AGAIN.text; local X = BUTTON_AGAIN.x + BUTTON_AGAIN.animation * 12; local Y = BUTTON_AGAIN.y
-    setColor(0,0,0)
+    setColor(32,46,55)
     love.graphics.print(text, X - 1, Y, 0, 1, 1)
     love.graphics.print(text, X + 1, Y, 0, 1, 1)
     love.graphics.print(text, X, Y - 1, 0, 1, 1)
@@ -40,7 +40,7 @@ function menu()
     love.graphics.print(text, X + 1, Y - 1, 0, 1, 1)
     love.graphics.print(text, X - 1, Y + 1, 0, 1, 1)
 
-    setColor(254,231,97)
+    setColor(232,193,112)
     love.graphics.print(text, X, Y, 0, 1, 1)
     
     if xM > BUTTON_AGAIN.x and xM < BUTTON_AGAIN.x + FONT:getWidth(text) and yM > BUTTON_AGAIN.y and yM < BUTTON_AGAIN.y + FONT:getHeight(text) then
@@ -60,7 +60,7 @@ function menu()
     end
 
     local text = BUTTON_QUIT.text; local X = BUTTON_QUIT.x + BUTTON_QUIT.animation * 12; local Y = BUTTON_QUIT.y
-    setColor(0,0,0)
+    setColor(32,46,55)
     love.graphics.print(text, X - 1, Y, 0, 1, 1)
     love.graphics.print(text, X + 1, Y, 0, 1, 1)
     love.graphics.print(text, X, Y - 1, 0, 1, 1)
@@ -71,7 +71,7 @@ function menu()
     love.graphics.print(text, X + 1, Y - 1, 0, 1, 1)
     love.graphics.print(text, X - 1, Y + 1, 0, 1, 1)
 
-    setColor(255,255,255)
+    setColor(235,237,233)
     love.graphics.print(text, X, Y, 0, 1, 1)
     
     if xM > BUTTON_QUIT.x and xM < BUTTON_QUIT.x + FONT:getWidth(text) and yM > BUTTON_QUIT.y and yM < BUTTON_QUIT.y + FONT:getHeight(text) then
@@ -91,7 +91,7 @@ function menu()
     end
 
     local text = BUTTON_TWITTER.text; local X = BUTTON_TWITTER.x + BUTTON_TWITTER.animation * 12; local Y = BUTTON_TWITTER.y
-    setColor(0,0,0)
+    setColor(32,46,55)
     love.graphics.print(text, X - 1, Y, 0, 1, 1)
     love.graphics.print(text, X + 1, Y, 0, 1, 1)
     love.graphics.print(text, X, Y - 1, 0, 1, 1)
@@ -122,7 +122,7 @@ function menu()
     end
 
     local text = BUTTON_SITE.text; local X = BUTTON_SITE.x + BUTTON_SITE.animation * 12; local Y = BUTTON_SITE.y
-    setColor(0,0,0)
+    setColor(32,46,55)
     love.graphics.print(text, X - 1, Y, 0, 1, 1)
     love.graphics.print(text, X + 1, Y, 0, 1, 1)
     love.graphics.print(text, X, Y - 1, 0, 1, 1)
@@ -153,7 +153,7 @@ function menu()
     end
 
     local text = "Lemonia"; local X = 4; local Y = 4
-    setColor(0,0,0)
+    setColor(23,32,56)
     love.graphics.print(text, X - 2, Y, 0, 2, 2)
     love.graphics.print(text, X + 2, Y, 0, 2, 2)
     love.graphics.print(text, X, Y - 2, 0, 2, 2)
@@ -164,7 +164,7 @@ function menu()
     love.graphics.print(text, X + 2, Y - 2, 0, 2, 2)
     love.graphics.print(text, X - 2, Y + 2, 0, 2, 2)
 
-    setColor(166,210,57)
+    setColor(79,143,186)
     love.graphics.print(text, X, Y, 0, 2, 2)
 
     setColor(255, 255, 255)
