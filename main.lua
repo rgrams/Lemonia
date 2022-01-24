@@ -2,24 +2,28 @@
 local isFullscreen = false
 local scenes
 local curScene
+local startingScene = "menu"
+local displayScale = 1
+local viewArea = { w = 800, h = 600 }
 
--- All global values used in all scenes (display, textures, options, etc.)
+_G.VIEW_ASPECT_RATIO = viewArea.w/viewArea.h
+_G.GLOBAL_TIMER = 0
+_G.TRANSITION = 1
+_G.FONT = nil -- Set in love.load().
+_G.DISPLAY_CANVAS = nil -- Set in love.load().
+
 function love.load()
-	-- Window and defaulting
-	love.graphics.setDefaultFilter("nearest","nearest")
-
+	-- Window
 	love.window.setTitle("Lemonia                   [F1 for fullscreen]")
+	local windowFlags = { resizable = true }
+	love.window.setMode(viewArea.w, viewArea.h, windowFlags)
 
-	WS = { 800,600 }
-	wFlags = { resizable=true }
-	aspectRatio = { WS[1]/WS[2], WS[2]/WS[1] }
+	-- Rendering
+	love.graphics.setDefaultFilter("nearest","nearest")
 	love.graphics.setBackgroundColor(0, 0, 0, 1)
-	love.window.setMode(WS[1], WS[2], wFlags)
-	displayScale = 1
-	display = love.graphics.newCanvas(WS[1], WS[2])
-	postProCanvas = love.graphics.newCanvas(WS[1], WS[2])
 
-	globalTimer = 0
+	DISPLAY_CANVAS = love.graphics.newCanvas(viewArea.w, viewArea.h)
+	-- postProCanvas = love.graphics.newCanvas(viewArea.w, viewArea.h)
 
 	-- Font
 	FONT = love.graphics.newFont("data/font.ttf", 8)
@@ -54,9 +58,9 @@ function love.load()
 	}
 
 	-- Set default scene (the first one)
-	curScene = "menu"
-	firstScene = "menu"
+	curScene = startingScene
 	scenes[curScene].Reload()
+	TRANSITION = 1
 
 	-- Set joysticks
 	JOYSTICKS = love.joystick.getJoysticks()
@@ -64,17 +68,14 @@ function love.load()
 	for id,J in pairs(JOYSTICKS) do
 		JOYSTICK_LAST_PRESSES[id] = "none"
 	end
-
-	-- Transitions
-	transition = 1
 end
 
 local function changeFullscreen()
 	isFullscreen = not isFullscreen
 	love.window.setFullscreen(isFullscreen)
 	if isFullscreen == false then
-		love.window.width = WS[1]
-		love.window.height = WS[2]
+		love.window.width = viewArea.w
+		love.window.height = viewArea.h
 		displayScale = 1
 	end
 end
@@ -83,13 +84,13 @@ end
 function love.draw()
 	-- Time and resetting
 	dt = love.timer.getDelta()
-	globalTimer = globalTimer + dt
+	GLOBAL_TIMER = GLOBAL_TIMER + dt
 
 	-- Mouse pos
 	xM, yM = love.mouse.getPosition()
 
 	w, h = love.graphics.getDimensions()
-	dw, dh = display:getDimensions()
+	dw, dh = DISPLAY_CANVAS:getDimensions()
 
 	xM = clamp(xM, w*0.5-dw*0.5*displayScale, w*0.5+dw*0.5*displayScale)
 	yM = clamp(yM, h*0.5-dh*0.5*displayScale, h*0.5+dh*0.5*displayScale)
@@ -100,7 +101,7 @@ function love.draw()
 
 	-- Bg and canvas resetting
 	love.graphics.setColor(1, 1, 1, 1)
-	love.graphics.setCanvas(display)
+	love.graphics.setCanvas(DISPLAY_CANVAS)
 	love.graphics.clear(0,0,0,1)
 
 	--------------------------------------------------------------------------SCENE CALLED
@@ -110,12 +111,14 @@ function love.draw()
 		scenes[curScene].Die()
 		curScene = nextScene
 		scenes[curScene].Reload()
-		transition = 1
+		TRANSITION = 1
 	end
 
-	setColor(0, 0, 0, 255*transition)
-	love.graphics.rectangle("fill", 0, 0, 800, 600)
-	transition = clamp(transition - dt, 0, 1)
+	if TRANSITION > 0 then
+		setColor(0, 0, 0, 255*TRANSITION)
+		love.graphics.rectangle("fill", 0, 0, 800, 600)
+		TRANSITION = clamp(TRANSITION - dt, 0, 1)
+	end
 
 	processCamera()
 
@@ -124,10 +127,10 @@ function love.draw()
 	-- Draw display
 	love.graphics.setCanvas()
 
-	love.graphics.draw(display, w*0.5-dw*0.5*displayScale + screenshake[1] * displayScale, h*0.5-dh*0.5*displayScale + screenshake[2] * displayScale, 0, displayScale, displayScale)
+	love.graphics.draw(DISPLAY_CANVAS, w*0.5-dw*0.5*displayScale + screenshake[1] * displayScale, h*0.5-dh*0.5*displayScale + screenshake[2] * displayScale, 0, displayScale, displayScale)
 
 	love.graphics.setColor(1, 0, 1, 1)
-	resetLights()
+	-- resetLights()
 
 	-- Check for fullscreen
 	if justPressed("f1") then
@@ -147,18 +150,18 @@ end
 -- Display resizing
 function love.resize(w, h)
 	-- Clamp
-	if w < WS[1] then
-		w = WS[1]
+	if w < viewArea.w then
+		w = viewArea.w
 	end
-	if h < WS[2] then
-		h = WS[2]
+	if h < viewArea.h then
+		h = viewArea.h
 	end
 
 	-- Set display scale
 	if w < h then
-		displayScale = w/WS[1]
+		displayScale = w/viewArea.w
 	else
-		displayScale = h/WS[2]
+		displayScale = h/viewArea.h
 	end
 
 	-- Set window
@@ -183,12 +186,12 @@ function love.joystickadded(joystick)
 end
 
 function love.joystickremoved(joystick)
-	id = elementIndex(JOYSTICKS, joystick)
+	local id = elementIndex(JOYSTICKS, joystick)
 	table.remove(JOYSTICKS, id)
 	table.remove(JOYSTICK_LAST_PRESSES, id)
 end
 
 function love.joystickpressed(joystick, button)
-	id = elementIndex(JOYSTICKS, joystick)
+	local id = elementIndex(JOYSTICKS, joystick)
 	JOYSTICK_LAST_PRESSES[id] = button
 end

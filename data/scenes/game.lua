@@ -170,7 +170,7 @@ function Game.Update()
 		PARTICLES_PLAYER_WALK:process()
 
 		setColor(255, 255, 255, 255 * (1 - math.abs(math.sin(player.iFrames / 1.15 * 3.14 * 5))))
-		addAnimatedSprite(IMAGE_PLAYER, 6 - player.hp, 1, player.x, player.y, boolToInt(xM > player.x) * 2 - 1, 1, math.sin(globalTimer * 12) * 0.2 * moving)
+		addAnimatedSprite(IMAGE_PLAYER, 6 - player.hp, 1, player.x, player.y, boolToInt(xM > player.x) * 2 - 1, 1, math.sin(GLOBAL_TIMER * 12) * 0.2 * moving)
 		setColor(255,255,255)
 
 		local aimerOffset = newVec(8, 0)
@@ -198,7 +198,7 @@ function Game.Update()
 		end
 	else -- player.hp <= 0
 		deathAnimationTimer:process()
-		transition = 1 - (deathAnimationTimer.time / deathAnimationTimer.timeMax)
+		TRANSITION = 1 - (deathAnimationTimer.time / deathAnimationTimer.timeMax)
 		MUSIC:setVolume(deathAnimationTimer.time / deathAnimationTimer.timeMax)
 
 		if deathAnimationTimer:isDone() then
@@ -320,7 +320,7 @@ function Game.Update()
 
 	local kill = {}
 	for id, C in ipairs(cogs) do
-		addSprite(IMAGE_COG, C.x, C.y + math.sin(globalTimer * 3) * 2, 1, 1, 0)
+		addSprite(IMAGE_COG, C.x, C.y + math.sin(GLOBAL_TIMER * 3) * 2, 1, 1, 0)
 
 		if newVec(player.x - C.x, player.y - C.y):getLen() < 16 then
 			player.hp = player.hp + 1
@@ -482,7 +482,7 @@ function Game.Update()
 	drawSprite(MOUSE_OUTER, xM, yM, 1, 1, player.shootTimer.time / player.shootTimer.timeMax * 1.57)
 
 	-- Draw the layer to the display (the layer is smaller size and gets scaled so the game is pixel perfect)
-	love.graphics.setCanvas(display)
+	love.graphics.setCanvas(DISPLAY_CANVAS)
 	love.graphics.draw(gameLayer, 0, 0, 0, 4, 4)
 
 	-- Return scene

@@ -40,7 +40,7 @@ function SplashScreen.Update()
 	love.graphics.setShader()
 
 	if timer < 0 then
-		nextScene = firstScene
+		nextScene = "menu"
 	end
 
 

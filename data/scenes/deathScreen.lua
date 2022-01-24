@@ -46,7 +46,7 @@ function DeathScreen.Update()
 
 		if mouseJustPressed(1) then
 			nextScene = "game"
-			transition = 1
+			TRANSITION = 1
 		end
 	else
 		BUTTON_AGAIN.animation = clamp(BUTTON_AGAIN.animation - dt * 4, 0, 1)
@@ -184,7 +184,7 @@ function DeathScreen.Update()
 	drawSprite(MOUSE_OUTER, xM, yM)
 
 	-- Draw the layer to the display (the layer is smaller size and gets scaled so the game is pixel perfect)
-	love.graphics.setCanvas(display)
+	love.graphics.setCanvas(DISPLAY_CANVAS)
 	love.graphics.draw(gameLayer, 0, 0, 0, 4, 4)
 
 	-- Return scene

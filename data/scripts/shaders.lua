@@ -18,7 +18,7 @@ SHADERS = {
 	GRAYSCALE = love.graphics.newShader((love.filesystem.read("data/shaders/GRAYSCALE.fs")))
 }
 
-SHADERS.GLOW:send("xRatio",aspectRatio[2])
+SHADERS.GLOW:send("xRatio",VIEW_ASPECT_RATIO)
 SHADERS.GLITCH:send("mask",love.graphics.newImage("data/images/shaderMasks/glitch.png"))
 
 -------- LIGHT SHADER FUNCTIONS --------
@@ -28,7 +28,7 @@ function shine(x,y,diffuse,power)
 	table.insert(lights,{position={x,y},diffuse=diffuse,power=power})
 end
 
-function processLights(position,diffuse,power)
+function processLights(position,diffuse,power,displayScale)
 	SHADERS.LIGHT:send("offset",{w*0.5-dw*0.5*displayScale,h*0.5-dh*0.5*displayScale})
 	SHADERS.LIGHT:send("numLights",table.getn(lights))
 
