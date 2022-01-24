@@ -1,80 +1,80 @@
 
 function gameReload() -- Loading the scene
-    gameLayer = love.graphics.newCanvas(200,150)
-    splatLayer = love.graphics.newCanvas(200,150)
-    ENEMY_COLORS = {
-        {232/255, 193/255, 112/255}, {208/255, 218/255, 145/255}, {223/255, 132/255, 165/255}
-        }
+	gameLayer = love.graphics.newCanvas(200,150)
+	splatLayer = love.graphics.newCanvas(200,150)
+	ENEMY_COLORS = {
+		{232/255, 193/255, 112/255}, {208/255, 218/255, 145/255}, {223/255, 132/255, 165/255}
+	}
 
-    love.graphics.setCanvas(splatLayer)
-    love.graphics.draw(love.graphics.newImage("data/images/background.png"))
-    love.graphics.setCanvas()
+	love.graphics.setCanvas(splatLayer)
+	love.graphics.draw(love.graphics.newImage("data/images/background.png"))
+	love.graphics.setCanvas()
 
-    -- Images
-    IMAGE_ENEMY = {love.graphics.newImage("data/images/lemon.png"), love.graphics.newImage("data/images/lemon2.png"), love.graphics.newImage("data/images/lemon3.png")}
+	-- Images
+	IMAGE_ENEMY = {love.graphics.newImage("data/images/lemon.png"), love.graphics.newImage("data/images/lemon2.png"), love.graphics.newImage("data/images/lemon3.png")}
 
-    IMAGE_PLAYER = loadSpritesheet("data/images/player.png", 11, 16)
-    IMAGE_PLAYER_GUN = love.graphics.newImage("data/images/shooter.png")
+	IMAGE_PLAYER = loadSpritesheet("data/images/player.png", 11, 16)
+	IMAGE_PLAYER_GUN = love.graphics.newImage("data/images/shooter.png")
 
-    IMAGE_BULLET = love.graphics.newImage("data/images/playerBullet.png")
+	IMAGE_BULLET = love.graphics.newImage("data/images/playerBullet.png")
 
-    IMAGE_COG = love.graphics.newImage("data/images/cog.png")
+	IMAGE_COG = love.graphics.newImage("data/images/cog.png")
 
 
-    -- Player
-    player = {
-        x = 100, y = 77,
+	-- Player
+	player = {
+		x = 100, y = 77,
 
-        vel = newVec(0, 0),
+		vel = newVec(0, 0),
 
-        hp = 5, speed = 80,
+		hp = 5, speed = 80,
 
-        shootTimer = newTimer(0.2), iFrames = 0
-    }
+		shootTimer = newTimer(0.2), iFrames = 0
+	}
 
-    died = false
+	died = false
 
-    -- Projectiles
-    playerBullets = {}
+	-- Projectiles
+	playerBullets = {}
 
-    -- Particles
-    particleSystems = {}
-    lemonSplatParticleSystems = {}
+	-- Particles
+	particleSystems = {}
+	lemonSplatParticleSystems = {}
 
-    PARTICLES_PLAYER_SHOOT = loadJson("data/particles/playerShot.json")
-    PARTICLES_PLAYER_WALK = newParticleSystem(0, 0, loadJson("data/particles/playerWalk.json"))
-    PARTICLES_PLAYER_DIE = loadJson("data/particles/playerDie.json")
+	PARTICLES_PLAYER_SHOOT = loadJson("data/particles/playerShot.json")
+	PARTICLES_PLAYER_WALK = newParticleSystem(0, 0, loadJson("data/particles/playerWalk.json"))
+	PARTICLES_PLAYER_DIE = loadJson("data/particles/playerDie.json")
 
-    PARTICLES_ENEMY_HIT = loadJson("data/particles/playerShotHit.json")
-    PARTICLES_ENEMY_SPLAT = loadJson("data/particles/enemySplat.json")
-    PARTICLES_ENEMY_DIE = loadJson("data/particles/enemyDie.json")
-    PARTICLES_LAST_ENEMY_DIE = loadJson("data/particles/lastEnemyDie.json")
+	PARTICLES_ENEMY_HIT = loadJson("data/particles/playerShotHit.json")
+	PARTICLES_ENEMY_SPLAT = loadJson("data/particles/enemySplat.json")
+	PARTICLES_ENEMY_DIE = loadJson("data/particles/enemyDie.json")
+	PARTICLES_LAST_ENEMY_DIE = loadJson("data/particles/lastEnemyDie.json")
 
-    -- Enemies and waves
-    enemies = {}
+	-- Enemies and waves
+	enemies = {}
 
-    waveCooldown = newTimer(1)
+	waveCooldown = newTimer(1)
 
-    wave = 0; waveJustEnded = true
+	wave = 0; waveJustEnded = true
 
-    -- Sprites
-    sprites = {}
+	-- Sprites
+	sprites = {}
 
-    -- Wave messages and score messages
-    waveMessages = {}; scoreMessages = {}
+	-- Wave messages and score messages
+	waveMessages = {}; scoreMessages = {}
 
-    -- Score
-    score = 0
+	-- Score
+	score = 0
 
-    -- Sound
-    MUSIC = love.audio.newSource("data/sound/music/music.wav", "stream")
-    MUSIC:play()
+	-- Sound
+	MUSIC = love.audio.newSource("data/sound/music/music.wav", "stream")
+	MUSIC:play()
 
-    -- Cogs
-    cogs = {}
+	-- Cogs
+	cogs = {}
 
-    -- Death animation
-    deathAnimationTimer = newTimer(4)
+	-- Death animation
+	deathAnimationTimer = newTimer(4)
 
 end
 
@@ -84,417 +84,417 @@ end
 function orderY(a,b) return a.y > a.y end
 
 function addSprite(tex, x, y, sx, sy, rot, flash)
-    local r, g, b, a = love.graphics.getColor()
-    table.insert(sprites, {tex = tex, x = x, y = y, sx = sx, sy = sy, rot = rot, animated = false, flash = flash or 0,r=r,g=g,b=b,a=a})
+	local r, g, b, a = love.graphics.getColor()
+	table.insert(sprites, {tex = tex, x = x, y = y, sx = sx, sy = sy, rot = rot, animated = false, flash = flash or 0,r=r,g=g,b=b,a=a})
 end
 function addAnimatedSprite(spritesheet, X, Y, x, y, sx, sy, rot, flash)
-    local r, g, b, a = love.graphics.getColor()
-    table.insert(sprites, {spritesheet = spritesheet, X = X, Y = Y, x = x, y = y, sx = sx, sy = sy, rot = rot, animated = true, flash = flash or 0,r=r,g=g,b=b,a=a})
+	local r, g, b, a = love.graphics.getColor()
+	table.insert(sprites, {spritesheet = spritesheet, X = X, Y = Y, x = x, y = y, sx = sx, sy = sy, rot = rot, animated = true, flash = flash or 0,r=r,g=g,b=b,a=a})
 end
 
 function game()
-    -- RESET
-    sceneAt = "game"
-    
-    love.graphics.setCanvas(gameLayer)
-    setColor(255, 255, 255)
-    clear(80, 80, 80)
+	-- RESET
+	sceneAt = "game"
 
-    xM = xM * 0.25; yM = yM * 0.25
+	love.graphics.setCanvas(gameLayer)
+	setColor(255, 255, 255)
+	clear(80, 80, 80)
 
-    sprites = {}
+	xM = xM * 0.25; yM = yM * 0.25
 
-    -- MUSIC
-    if not MUSIC:isPlaying() then MUSIC:play() end
+	sprites = {}
 
-    -- WAVE PROCESSING
+	-- MUSIC
+	if not MUSIC:isPlaying() then MUSIC:play() end
 
-    if #enemies == 0 then
+	-- WAVE PROCESSING
 
-         wave = wave + 1
+	if #enemies == 0 then
 
-        -- Spawn enemies
-        for e=0, wave * 2 + 1 do
-            
-            -- Random position
-            local enemyPos = newVec(love.math.random(300, 530), 0); enemyPos:rotate(love.math.random(0, 360))
+		wave = wave + 1
 
-            -- New wave message
-            table.insert(waveMessages,{
+		-- Spawn enemies
+		for e=0, wave * 2 + 1 do
 
-                lifetime = 2.5, wave = wave
+			-- Random position
+			local enemyPos = newVec(love.math.random(300, 530), 0); enemyPos:rotate(love.math.random(0, 360))
 
-                }
-            )
+			-- New wave message
+			table.insert(waveMessages,{
 
-            -- Insert the enemy in the enemies table
-            table.insert(enemies, {
+				lifetime = 2.5, wave = wave
 
-                x = enemyPos.x + 100; y = enemyPos.y + 75,
+			}
+		)
 
-                hp = 3, hasItem = false,
+		-- Insert the enemy in the enemies table
+		table.insert(enemies, {
 
-                knockback = newVec(0, 0), flashTimer = newTimer(0.6), sprite = love.math.random(1,3)
+			x = enemyPos.x + 100; y = enemyPos.y + 75,
 
-                }
-            )
+			hp = 3, hasItem = false,
 
-        end
-        
-    end
+			knockback = newVec(0, 0), flashTimer = newTimer(0.6), sprite = love.math.random(1,3)
 
-    -- SPLAT
-    love.graphics.draw(splatLayer)
+		}
+	)
 
-    -- PLAYER
-    if player.hp > 0 then
-        player.iFrames = clamp(player.iFrames - dt, 0, 99)
-        
-        player.vel.x = lerp(player.vel.x, (boolToInt(pressed("d")) - boolToInt(pressed("a"))) * player.speed, dt * 5)
-        player.vel.y = lerp(player.vel.y, (boolToInt(pressed("s")) - boolToInt(pressed("w"))) * player.speed, dt * 5)
+end
 
-        player.x = clamp(player.x + player.vel.x * dt, 0, 200); player.y = clamp(player.y + player.vel.y * dt, 0, 150)
+end
 
-        local moving = (math.abs(player.vel.x) + math.abs(player.vel.y)) / player.speed
+-- SPLAT
+love.graphics.draw(splatLayer)
 
-        player.shootTimer:process()
+-- PLAYER
+if player.hp > 0 then
+	player.iFrames = clamp(player.iFrames - dt, 0, 99)
 
-        -- Drawing
-        PARTICLES_PLAYER_WALK.x = player.x; PARTICLES_PLAYER_WALK.y = player.y + 8
-        PARTICLES_PLAYER_WALK.ticks = round(moving)
-        PARTICLES_PLAYER_WALK:process()
+	player.vel.x = lerp(player.vel.x, (boolToInt(pressed("d")) - boolToInt(pressed("a"))) * player.speed, dt * 5)
+	player.vel.y = lerp(player.vel.y, (boolToInt(pressed("s")) - boolToInt(pressed("w"))) * player.speed, dt * 5)
 
-        setColor(255, 255, 255, 255 * (1 - math.abs(math.sin(player.iFrames / 1.15 * 3.14 * 5))))
-        addAnimatedSprite(IMAGE_PLAYER, 6 - player.hp, 1, player.x, player.y, boolToInt(xM > player.x) * 2 - 1, 1, math.sin(globalTimer * 12) * 0.2 * moving)
-        setColor(255,255,255)
+	player.x = clamp(player.x + player.vel.x * dt, 0, 200); player.y = clamp(player.y + player.vel.y * dt, 0, 150)
 
-        local aimerOffset = newVec(8, 0)
-        local aimerRotation = newVec(xM - player.x, yM - player.y):getRot()
-        aimerOffset:rotate(aimerRotation)
+	local moving = (math.abs(player.vel.x) + math.abs(player.vel.y)) / player.speed
 
-        addSprite(IMAGE_PLAYER_GUN, player.x + aimerOffset.x, player.y + aimerOffset.y, 1, 1, aimerRotation / 180 * 3.14)
+	player.shootTimer:process()
 
-        -- Shooting
-        if mousePressed(1) and player.shootTimer:isDone() then
+	-- Drawing
+	PARTICLES_PLAYER_WALK.x = player.x; PARTICLES_PLAYER_WALK.y = player.y + 8
+	PARTICLES_PLAYER_WALK.ticks = round(moving)
+	PARTICLES_PLAYER_WALK:process()
 
-            player.shootTimer:reset()
-            playSound("shoot", love.math.random(40,160) * 0.01)
+	setColor(255, 255, 255, 255 * (1 - math.abs(math.sin(player.iFrames / 1.15 * 3.14 * 5))))
+	addAnimatedSprite(IMAGE_PLAYER, 6 - player.hp, 1, player.x, player.y, boolToInt(xM > player.x) * 2 - 1, 1, math.sin(globalTimer * 12) * 0.2 * moving)
+	setColor(255,255,255)
 
-            table.insert(playerBullets,
-                {
-                x = player.x + aimerOffset.x * 1.4; y = player.y + aimerOffset.y * 1.4,
+	local aimerOffset = newVec(8, 0)
+	local aimerRotation = newVec(xM - player.x, yM - player.y):getRot()
+	aimerOffset:rotate(aimerRotation)
 
-                vel = newVec(160, 0):rotate(aimerRotation + love.math.random(-5, 5))
-                }
-        
-            )
+	addSprite(IMAGE_PLAYER_GUN, player.x + aimerOffset.x, player.y + aimerOffset.y, 1, 1, aimerRotation / 180 * 3.14)
 
-            table.insert(particleSystems, newParticleSystem(player.x + aimerOffset.x * 1.4, player.y + aimerOffset.y * 1.4, deepcopyTable(PARTICLES_PLAYER_SHOOT)))
+	-- Shooting
+	if mousePressed(1) and player.shootTimer:isDone() then
 
-            --shake(2, 1, 0.1)
+		player.shootTimer:reset()
+		playSound("shoot", love.math.random(40,160) * 0.01)
 
-        end
-    else
+		table.insert(playerBullets,
+		{
+			x = player.x + aimerOffset.x * 1.4; y = player.y + aimerOffset.y * 1.4,
 
-        deathAnimationTimer:process()
-        transition = 1 - (deathAnimationTimer.time / deathAnimationTimer.timeMax)
-        MUSIC:setVolume(deathAnimationTimer.time / deathAnimationTimer.timeMax)
+			vel = newVec(160, 0):rotate(aimerRotation + love.math.random(-5, 5))
+		}
 
-        if deathAnimationTimer:isDone() then
+	)
 
-            sceneAt = "deathScreen"
+	table.insert(particleSystems, newParticleSystem(player.x + aimerOffset.x * 1.4, player.y + aimerOffset.y * 1.4, deepcopyTable(PARTICLES_PLAYER_SHOOT)))
 
-        end
+	--shake(2, 1, 0.1)
 
-        if died == false then
+end
+else
 
-            died = true
-            table.insert(particleSystems, newParticleSystem(player.x, player.y, PARTICLES_PLAYER_DIE)); playSound("playerDie", 1)
+	deathAnimationTimer:process()
+	transition = 1 - (deathAnimationTimer.time / deathAnimationTimer.timeMax)
+	MUSIC:setVolume(deathAnimationTimer.time / deathAnimationTimer.timeMax)
 
-        end
+	if deathAnimationTimer:isDone() then
 
-    end
+		sceneAt = "deathScreen"
 
-    -- ENEMIES
+	end
 
-    local kill = {}
-    for id, E in ipairs(enemies) do
-        local rot = nil; local dir = nil
-        if E.hasItem then
+	if died == false then
 
-            rot = newVec(E.x - player.x, E.y - player.y)
-            dir = newVec(30, 0):rotate(rot:getRot())
+		died = true
+		table.insert(particleSystems, newParticleSystem(player.x, player.y, PARTICLES_PLAYER_DIE)); playSound("playerDie", 1)
 
-            if E.x < -100 or E.x > 300 or E.y < -100 or E.y > 250 then table.insert(kill, id) end
+	end
 
-        else
+end
 
-            rot = newVec(E.x - player.x, E.y - player.y)
-            dir = newVec(40, 0):rotate(rot:getRot() + 180)
+-- ENEMIES
 
-            if newVec(player.x - E.x, player.y - E.y):getLen() < 4 and player.iFrames == 0 then
+local kill = {}
+for id, E in ipairs(enemies) do
+	local rot = nil; local dir = nil
+	if E.hasItem then
 
-                E.hasItem = true; player.hp = player.hp - 1; player.iFrames = 1.5; playSound("playerHit", love.math.random(80,120) * 0.01); shake(8, 3, 0.075)
+		rot = newVec(E.x - player.x, E.y - player.y)
+		dir = newVec(30, 0):rotate(rot:getRot())
 
-            end
+		if E.x < -100 or E.x > 300 or E.y < -100 or E.y > 250 then table.insert(kill, id) end
 
-        end
+	else
 
-        E.knockback.x = lerp(E.knockback.x, 0, dt * 4); E.knockback.y = lerp(E.knockback.y, 0, dt * 4)
+		rot = newVec(E.x - player.x, E.y - player.y)
+		dir = newVec(40, 0):rotate(rot:getRot() + 180)
 
-        E.x = E.x + (dir.x + E.knockback.x) * dt; E.y = E.y + (dir.y + E.knockback.y) * dt
+		if newVec(player.x - E.x, player.y - E.y):getLen() < 4 and player.iFrames == 0 then
 
-        E.flashTimer:process()
+			E.hasItem = true; player.hp = player.hp - 1; player.iFrames = 1.5; playSound("playerHit", love.math.random(80,120) * 0.01); shake(8, 3, 0.075)
 
-        addSprite(IMAGE_ENEMY[E.sprite], E.x, E.y, boolToInt(dir.x > 0) * 2 - 1, 1, E.flashTimer.time, boolToInt(E.flashTimer.time > 0.5))
-        if E.hasItem then addSprite(IMAGE_COG, E.x, E.y - 12, 1, 1) end
+		end
 
-        local bulletKill = {}
-        for idB, B in ipairs(playerBullets) do
+	end
 
-            local difference = newVec(B.x - E.x, B.y - E.y)
+	E.knockback.x = lerp(E.knockback.x, 0, dt * 4); E.knockback.y = lerp(E.knockback.y, 0, dt * 4)
 
-            if difference:getLen() < 12 then
-                    
-                table.insert(bulletKill, idB)
+	E.x = E.x + (dir.x + E.knockback.x) * dt; E.y = E.y + (dir.y + E.knockback.y) * dt
 
-                E.hp = E.hp - 1
+	E.flashTimer:process()
 
-                -- Juice
-                --shake(3, 2, 0.1)
+	addSprite(IMAGE_ENEMY[E.sprite], E.x, E.y, boolToInt(dir.x > 0) * 2 - 1, 1, E.flashTimer.time, boolToInt(E.flashTimer.time > 0.5))
+	if E.hasItem then addSprite(IMAGE_COG, E.x, E.y - 12, 1, 1) end
 
-                E.flashTimer:reset()
+	local bulletKill = {}
+	for idB, B in ipairs(playerBullets) do
 
-                playSound("enemyHit", love.math.random(80,120) * 0.01)
+		local difference = newVec(B.x - E.x, B.y - E.y)
 
-                local knockback = newVec(40, 0):rotate(difference:getRot() + 180)
+		if difference:getLen() < 12 then
 
-                table.insert(particleSystems, newParticleSystem(B.x, B.y, deepcopyTable(PARTICLES_ENEMY_HIT)))
+			table.insert(bulletKill, idB)
 
-                E.knockback.x = E.knockback.x + knockback.x
-                E.knockback.y = E.knockback.y + knockback.y
+			E.hp = E.hp - 1
 
-                if E.hp == 0 then
+			-- Juice
+			--shake(3, 2, 0.1)
 
-                    if E.hasItem then
+			E.flashTimer:reset()
 
-                        table.insert(cogs,
-                            {
-                                x = E.x, y = E.y
-                            }
-                        )
+			playSound("enemyHit", love.math.random(80,120) * 0.01)
 
-                    end
+			local knockback = newVec(40, 0):rotate(difference:getRot() + 180)
 
-                    score = score + 100
-                    table.insert(scoreMessages, {message = ""..tostring(100), x = E.x, y = E.y - 12, lifetime = 0.8})
+			table.insert(particleSystems, newParticleSystem(B.x, B.y, deepcopyTable(PARTICLES_ENEMY_HIT)))
 
-                    --shake(5, 2, 0.1)
+			E.knockback.x = E.knockback.x + knockback.x
+			E.knockback.y = E.knockback.y + knockback.y
 
-                    table.insert(kill, id)
+			if E.hp == 0 then
 
-                    playSound("enemyDie", love.math.random(80,120) * 0.01)
+				if E.hasItem then
 
-                    local particleData = deepcopyTable(PARTICLES_ENEMY_SPLAT); particleData.rotation = B.vel:getRot()
-                    print(ENEMY_COLORS[E.sprite].r)            
+					table.insert(cogs,
+					{
+						x = E.x, y = E.y
+					}
+				)
 
-                    particleData.particleData.color.r.a = ENEMY_COLORS[E.sprite][1]
-                    particleData.particleData.color.r.b = ENEMY_COLORS[E.sprite][1]
+			end
 
-                    particleData.particleData.color.g.a = ENEMY_COLORS[E.sprite][2]
-                    particleData.particleData.color.g.b = ENEMY_COLORS[E.sprite][2]
+			score = score + 100
+			table.insert(scoreMessages, {message = ""..tostring(100), x = E.x, y = E.y - 12, lifetime = 0.8})
 
-                    particleData.particleData.color.b.a = ENEMY_COLORS[E.sprite][3]
-                    particleData.particleData.color.b.b = ENEMY_COLORS[E.sprite][3]
-                    
-                    table.insert(lemonSplatParticleSystems, newParticleSystem(B.x, B.y, particleData))
+			--shake(5, 2, 0.1)
 
-                    table.insert(particleSystems, newParticleSystem(B.x, B.y, deepcopyTable(PARTICLES_ENEMY_DIE)))
+			table.insert(kill, id)
 
-                    if #enemies - #kill == 0 then table.insert(particleSystems, newParticleSystem(B.x, B.y, deepcopyTable(PARTICLES_LAST_ENEMY_DIE))); shake(7, 2, 0.1) end
-                    
-                    
-                    break
-                end
+			playSound("enemyDie", love.math.random(80,120) * 0.01)
 
-            end
+			local particleData = deepcopyTable(PARTICLES_ENEMY_SPLAT); particleData.rotation = B.vel:getRot()
+			print(ENEMY_COLORS[E.sprite].r)
 
-        end playerBullets = wipeKill(bulletKill, playerBullets)
+			particleData.particleData.color.r.a = ENEMY_COLORS[E.sprite][1]
+			particleData.particleData.color.r.b = ENEMY_COLORS[E.sprite][1]
 
-    end enemies = wipeKill(kill, enemies)
+			particleData.particleData.color.g.a = ENEMY_COLORS[E.sprite][2]
+			particleData.particleData.color.g.b = ENEMY_COLORS[E.sprite][2]
 
-    -- COGS
+			particleData.particleData.color.b.a = ENEMY_COLORS[E.sprite][3]
+			particleData.particleData.color.b.b = ENEMY_COLORS[E.sprite][3]
 
-    local kill = {}
-    for id, C in ipairs(cogs) do
+			table.insert(lemonSplatParticleSystems, newParticleSystem(B.x, B.y, particleData))
 
-        addSprite(IMAGE_COG, C.x, C.y + math.sin(globalTimer * 3) * 2, 1, 1, 0)
-        
-        if newVec(player.x - C.x, player.y - C.y):getLen() < 16 then
+			table.insert(particleSystems, newParticleSystem(B.x, B.y, deepcopyTable(PARTICLES_ENEMY_DIE)))
 
-            player.hp = player.hp + 1
-            table.insert(kill, id)
+			if #enemies - #kill == 0 then table.insert(particleSystems, newParticleSystem(B.x, B.y, deepcopyTable(PARTICLES_LAST_ENEMY_DIE))); shake(7, 2, 0.1) end
 
-        end
 
-    end cogs = wipeKill(kill, cogs)
+			break
+		end
 
-    -- SPRITES
+	end
 
-    -- Sort
-    table.sort(sprites, orderY)
+end playerBullets = wipeKill(bulletKill, playerBullets)
 
-    -- Draw
-    love.graphics.setShader(SHADERS.FLASH)
+end enemies = wipeKill(kill, enemies)
 
-    for id, S in ipairs(sprites) do
-        SHADERS.FLASH:send("intensity", S.flash or 0)
-        
-        love.graphics.setColor(S.r, S.g, S.b, S.a)
+-- COGS
 
-        if S.animated then
+local kill = {}
+for id, C in ipairs(cogs) do
 
-            drawFrame(S.spritesheet, S.X, S.Y, S.x, S.y, S.sx, S.sY, S.rot)
+	addSprite(IMAGE_COG, C.x, C.y + math.sin(globalTimer * 3) * 2, 1, 1, 0)
 
-        else
+	if newVec(player.x - C.x, player.y - C.y):getLen() < 16 then
 
-            drawSprite(S.tex, S.x, S.y, S.sx, S.sy, S.rot)
+		player.hp = player.hp + 1
+		table.insert(kill, id)
 
-        end
-    end
+	end
 
-    love.graphics.setShader()
+end cogs = wipeKill(kill, cogs)
 
-    -- PLAYER BULLETS
+-- SPRITES
 
-    -- Loop trough all bullelts
-    local kill = {}
-    for id, B in ipairs(playerBullets) do
+-- Sort
+table.sort(sprites, orderY)
 
-        -- Move bullet
-        B.x = B.x + B.vel.x * dt; B.y = B.y + B.vel.y * dt
+-- Draw
+love.graphics.setShader(SHADERS.FLASH)
 
-        -- Draw bullet
-        drawSprite(IMAGE_BULLET, B.x, B.y, 1, 1, B.vel:getRot() / 180 * 3.14)
+for id, S in ipairs(sprites) do
+	SHADERS.FLASH:send("intensity", S.flash or 0)
 
-        -- Kill bullets offscreen
-        if B.x < -8 or B.x > 208 or B.y < -8 or B.y > 158 then table.insert(kill, id) end
+	love.graphics.setColor(S.r, S.g, S.b, S.a)
 
-    end playerBullets = wipeKill(kill, playerBullets)
+	if S.animated then
 
-    -- PARTICLES AND MARKS
-    local kill = {}
-    for id, P in ipairs(particleSystems) do
+		drawFrame(S.spritesheet, S.X, S.Y, S.x, S.y, S.sx, S.sY, S.rot)
 
-        -- Process particle system
-        P:process()
+	else
 
-        -- Kill if it is done
-        if P.ticks == 0 and #P.particles == 0 then table.insert(kill, id) end
+		drawSprite(S.tex, S.x, S.y, S.sx, S.sy, S.rot)
 
-    end particleSystems = wipeKill(kill, particleSystems)
+	end
+end
 
-    love.graphics.setCanvas(splatLayer)
+love.graphics.setShader()
 
-    local kill = {}
-    for id, P in ipairs(lemonSplatParticleSystems) do
+-- PLAYER BULLETS
 
-        -- Process particle system
-        P:process()
+-- Loop trough all bullelts
+local kill = {}
+for id, B in ipairs(playerBullets) do
 
-        -- Kill if it is done
-        if P.ticks == 0 and #P.particles == 0 then table.insert(kill, id) end
+	-- Move bullet
+	B.x = B.x + B.vel.x * dt; B.y = B.y + B.vel.y * dt
 
-    end lemonSplatParticleSystems = wipeKill(kill, lemonSplatParticleSystems)
+	-- Draw bullet
+	drawSprite(IMAGE_BULLET, B.x, B.y, 1, 1, B.vel:getRot() / 180 * 3.14)
 
-    love.graphics.setCanvas(gameLayer)
+	-- Kill bullets offscreen
+	if B.x < -8 or B.x > 208 or B.y < -8 or B.y > 158 then table.insert(kill, id) end
 
-    -- SCORE MESSAGES
+end playerBullets = wipeKill(kill, playerBullets)
 
-    local kill = {}
-    for id, M in ipairs(scoreMessages) do
+-- PARTICLES AND MARKS
+local kill = {}
+for id, P in ipairs(particleSystems) do
 
-        M.lifetime = M.lifetime - dt
-        
-        local text = M.message
+	-- Process particle system
+	P:process()
 
-        local X = round(M.x); local Y = round(M.y + 8 * M.lifetime / 0.8)
+	-- Kill if it is done
+	if P.ticks == 0 and #P.particles == 0 then table.insert(kill, id) end
 
-        local A = 255 * M.lifetime / 0.8
+end particleSystems = wipeKill(kill, particleSystems)
 
-        setColor(207,87,60,A)
-        love.graphics.print(text, X - 1, Y, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
-        love.graphics.print(text, X + 1, Y, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
-        love.graphics.print(text, X, Y - 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
-        love.graphics.print(text, X, Y + 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
+love.graphics.setCanvas(splatLayer)
 
-        love.graphics.print(text, X - 1, Y - 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
-        love.graphics.print(text, X + 1, Y + 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
-        love.graphics.print(text, X + 1, Y - 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
-        love.graphics.print(text, X - 1, Y + 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
+local kill = {}
+for id, P in ipairs(lemonSplatParticleSystems) do
 
-        setColor(231,213,179, A)
-        love.graphics.print(text, X, Y, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
+	-- Process particle system
+	P:process()
 
-        if M.lifetime < 0 then table.insert(kill, id) end
+	-- Kill if it is done
+	if P.ticks == 0 and #P.particles == 0 then table.insert(kill, id) end
 
-    end scoreMessages = wipeKill(kill, scoreMessages)
+end lemonSplatParticleSystems = wipeKill(kill, lemonSplatParticleSystems)
 
-    -- WAVE MESSAGES
+love.graphics.setCanvas(gameLayer)
 
-    local kill = {}
-    for id, M in ipairs(waveMessages) do
+-- SCORE MESSAGES
 
-        M.lifetime = M.lifetime - dt
+local kill = {}
+for id, M in ipairs(scoreMessages) do
 
-        text = "Wave "..tostring(M.wave)
+	M.lifetime = M.lifetime - dt
 
-        local X = 100; local Y = 95 * math.abs(math.sin((1 - M.lifetime / 2.5) * 3.14)) - 20
-        setColor(122,72,65,A)
-        love.graphics.print(text, X - 2, Y, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
-        love.graphics.print(text, X + 2, Y, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
-        love.graphics.print(text, X, Y - 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
-        love.graphics.print(text, X, Y + 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+	local text = M.message
 
-        love.graphics.print(text, X - 2, Y - 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
-        love.graphics.print(text, X + 2, Y + 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
-        love.graphics.print(text, X + 2, Y - 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
-        love.graphics.print(text, X - 2, Y + 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+	local X = round(M.x); local Y = round(M.y + 8 * M.lifetime / 0.8)
 
-        setColor(231,213,179, A)
-        love.graphics.print(text, X, Y, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+	local A = 255 * M.lifetime / 0.8
 
-        if M.lifetime < 0 then table.insert(kill, id) end
-        
-    end waveMessages = wipeKill(kill, waveMessages)
+	setColor(207,87,60,A)
+	love.graphics.print(text, X - 1, Y, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
+	love.graphics.print(text, X + 1, Y, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
+	love.graphics.print(text, X, Y - 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
+	love.graphics.print(text, X, Y + 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
 
-    -- SCORE
-    local text = tostring(score)
-    local X = 4; local Y = 2
+	love.graphics.print(text, X - 1, Y - 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
+	love.graphics.print(text, X + 1, Y + 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
+	love.graphics.print(text, X + 1, Y - 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
+	love.graphics.print(text, X - 1, Y + 1, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
 
-    setColor(129,151,150)
-    love.graphics.print(text, X - 1, Y, 0, 1, 1)
-    love.graphics.print(text, X + 1, Y, 0, 1, 1)
-    love.graphics.print(text, X, Y - 1, 0, 1, 1)
-    love.graphics.print(text, X, Y + 1, 0, 1, 1)
+	setColor(231,213,179, A)
+	love.graphics.print(text, X, Y, 0, 1, 1, round(FONT:getWidth(text)) * 0.5, round(FONT:getHeight(text)) * 0.5)
 
-    love.graphics.print(text, X - 1, Y - 1, 0, 1, 1)
-    love.graphics.print(text, X + 1, Y + 1, 0, 1, 1)
-    love.graphics.print(text, X + 1, Y - 1, 0, 1, 1)
-    love.graphics.print(text, X - 1, Y + 1, 0, 1, 1)
+	if M.lifetime < 0 then table.insert(kill, id) end
 
-    setColor(235,237,233)
-    love.graphics.print(text, X, Y, 0, 1, 1)
+end scoreMessages = wipeKill(kill, scoreMessages)
 
-    -- MOUSE
-    setColor(255, 255, 255)
-    drawSprite(MOUSE, xM, yM)
-    drawSprite(MOUSE_OUTER, xM, yM, 1, 1, player.shootTimer.time / player.shootTimer.timeMax * 1.57)
-    
-    -- Draw the layer to the display (the layer is smaller size and gets scaled so the game is pixel perfect)
-    love.graphics.setCanvas(display)
-    love.graphics.draw(gameLayer, 0, 0, 0, 4, 4)
+-- WAVE MESSAGES
 
-    -- Return scene
-    return sceneAt
+local kill = {}
+for id, M in ipairs(waveMessages) do
+
+	M.lifetime = M.lifetime - dt
+
+	text = "Wave "..tostring(M.wave)
+
+	local X = 100; local Y = 95 * math.abs(math.sin((1 - M.lifetime / 2.5) * 3.14)) - 20
+	setColor(122,72,65,A)
+	love.graphics.print(text, X - 2, Y, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+	love.graphics.print(text, X + 2, Y, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+	love.graphics.print(text, X, Y - 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+	love.graphics.print(text, X, Y + 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+
+	love.graphics.print(text, X - 2, Y - 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+	love.graphics.print(text, X + 2, Y + 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+	love.graphics.print(text, X + 2, Y - 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+	love.graphics.print(text, X - 2, Y + 2, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+
+	setColor(231,213,179, A)
+	love.graphics.print(text, X, Y, 0, 2, 2, round(FONT:getWidth(text) * 0.5), round(FONT:getHeight(text) * 0.5))
+
+	if M.lifetime < 0 then table.insert(kill, id) end
+
+end waveMessages = wipeKill(kill, waveMessages)
+
+-- SCORE
+local text = tostring(score)
+local X = 4; local Y = 2
+
+setColor(129,151,150)
+love.graphics.print(text, X - 1, Y, 0, 1, 1)
+love.graphics.print(text, X + 1, Y, 0, 1, 1)
+love.graphics.print(text, X, Y - 1, 0, 1, 1)
+love.graphics.print(text, X, Y + 1, 0, 1, 1)
+
+love.graphics.print(text, X - 1, Y - 1, 0, 1, 1)
+love.graphics.print(text, X + 1, Y + 1, 0, 1, 1)
+love.graphics.print(text, X + 1, Y - 1, 0, 1, 1)
+love.graphics.print(text, X - 1, Y + 1, 0, 1, 1)
+
+setColor(235,237,233)
+love.graphics.print(text, X, Y, 0, 1, 1)
+
+-- MOUSE
+setColor(255, 255, 255)
+drawSprite(MOUSE, xM, yM)
+drawSprite(MOUSE_OUTER, xM, yM, 1, 1, player.shootTimer.time / player.shootTimer.timeMax * 1.57)
+
+-- Draw the layer to the display (the layer is smaller size and gets scaled so the game is pixel perfect)
+love.graphics.setCanvas(display)
+love.graphics.draw(gameLayer, 0, 0, 0, 4, 4)
+
+-- Return scene
+return sceneAt
 end

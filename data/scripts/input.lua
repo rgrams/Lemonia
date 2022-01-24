@@ -3,7 +3,7 @@
 
 lastKeyPressed = "none"
 -- Keyboard input
-function pressed(string) return love.keyboard.isDown(string) end -- Returns if a key is pressed (just for consistency XD)
+function pressed(string) return love.keyboard.isScancodeDown(string) end -- Returns if a key is pressed (just for consistency XD)
 
 function justPressed(string) return lastKeyPressed == string end -- Returns if a key is pressed at that frame.
 
@@ -29,14 +29,14 @@ function joystickJustPressed(id,button) return JOYSTICK_LAST_PRESSES[id] == butt
 
 function joystickGetAxis(id,axis)
 
-    if idInTable(JOYSTICKS,id) then
-    axis = axis * 2
+	if idInTable(JOYSTICKS,id) then
+		axis = axis * 2
 
-    local x = JOYSTICKS[id]:getAxis(axis - 1)
-    local y = JOYSTICKS[id]:getAxis(axis)
+		local x = JOYSTICKS[id]:getAxis(axis - 1)
+		local y = JOYSTICKS[id]:getAxis(axis)
 
-    return newVec(x,y)
-    end
+		return newVec(x,y)
+	end
 
-    return 0
+	return 0
 end
