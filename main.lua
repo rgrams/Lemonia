@@ -11,6 +11,7 @@ _G.GLOBAL_TIMER = 0
 _G.TRANSITION = 1
 _G.FONT = nil -- Set in love.load().
 _G.DISPLAY_CANVAS = nil -- Set in love.load().
+_G.SCORE = 0
 
 function love.load()
 	-- Window

@@ -1,30 +1,59 @@
 
 local Game = {}
 
+local gameLayer, splatLayer
+
+local ENEMY_COLORS = {
+	{232/255, 193/255, 112/255},
+	{208/255, 218/255, 145/255},
+	{223/255, 132/255, 165/255}
+}
+
+local IMAGE_ENEMY = {
+	love.graphics.newImage("data/images/lemon.png"),
+	love.graphics.newImage("data/images/lemon2.png"),
+	love.graphics.newImage("data/images/lemon3.png")
+}
+
+local IMAGE_PLAYER = loadSpritesheet("data/images/player.png", 11, 16)
+local IMAGE_PLAYER_GUN = love.graphics.newImage("data/images/shooter.png")
+local IMAGE_BULLET = love.graphics.newImage("data/images/playerBullet.png")
+local IMAGE_COG = love.graphics.newImage("data/images/cog.png")
+local bg = love.graphics.newImage("data/images/background.png")
+
+local MOUSE = love.graphics.newImage("data/images/mouse/mouseMiddle.png")
+local MOUSE_OUTER = love.graphics.newImage("data/images/mouse/mouseOuter.png")
+
+local player
+local died
+local playerBullets
+local particleSystems
+local lemonSplatParticleSystems
+local enemies
+local waveCooldown -- unused
+local wave
+local waveJustEnded -- unused
+local sprites
+local waveMessages
+local scoreMessages
+local cogs
+local deathAnimationTimer
+local PARTICLES_PLAYER_SHOOT
+local PARTICLES_PLAYER_WALK
+local PARTICLES_PLAYER_DIE
+local PARTICLES_ENEMY_HIT
+local PARTICLES_ENEMY_SPLAT
+local PARTICLES_ENEMY_DIE
+local PARTICLES_LAST_ENEMY_DIE
+local MUSIC
+
 function Game.Reload() -- Loading the scene
 	gameLayer = love.graphics.newCanvas(200,150)
 	splatLayer = love.graphics.newCanvas(200,150)
-	ENEMY_COLORS = {
-		{232/255, 193/255, 112/255}, {208/255, 218/255, 145/255}, {223/255, 132/255, 165/255}
-	}
 
 	love.graphics.setCanvas(splatLayer)
-	love.graphics.draw(love.graphics.newImage("data/images/background.png"))
+	love.graphics.draw(bg)
 	love.graphics.setCanvas()
-
-	-- Images
-	IMAGE_ENEMY = {
-		love.graphics.newImage("data/images/lemon.png"),
-		love.graphics.newImage("data/images/lemon2.png"),
-		love.graphics.newImage("data/images/lemon3.png")
-	}
-
-	IMAGE_PLAYER = loadSpritesheet("data/images/player.png", 11, 16)
-	IMAGE_PLAYER_GUN = love.graphics.newImage("data/images/shooter.png")
-
-	IMAGE_BULLET = love.graphics.newImage("data/images/playerBullet.png")
-
-	IMAGE_COG = love.graphics.newImage("data/images/cog.png")
 
 	-- Player
 	player = {
@@ -71,7 +100,7 @@ function Game.Reload() -- Loading the scene
 	scoreMessages = {}
 
 	-- Score
-	score = 0
+	SCORE = 0
 
 	-- Sound
 	MUSIC = love.audio.newSource("data/sound/music/music.wav", "stream")
@@ -216,8 +245,8 @@ function Game.Update()
 
 	local kill = {}
 	for id, E in ipairs(enemies) do
-		local rot = nil
-		local dir = nil
+		local rot
+		local dir
 		if E.hasItem then
 			rot = newVec(E.x - player.x, E.y - player.y)
 			dir = newVec(30, 0):rotate(rot:getRot())
@@ -279,7 +308,7 @@ function Game.Update()
 						table.insert(cogs, { x = E.x, y = E.y } )
 					end
 
-					score = score + 100
+					SCORE = SCORE + 100
 					table.insert(scoreMessages, {message = ""..tostring(100), x = E.x, y = E.y - 12, lifetime = 0.8})
 
 					--shake(5, 2, 0.1)
@@ -436,7 +465,7 @@ function Game.Update()
 
 		M.lifetime = M.lifetime - dt
 
-		text = "Wave "..tostring(M.wave)
+		local text = "Wave "..tostring(M.wave)
 
 		local X = 100; local Y = 95 * math.abs(math.sin((1 - M.lifetime / 2.5) * 3.14)) - 20
 		setColor(122,72,65,A)
@@ -459,7 +488,7 @@ function Game.Update()
 	waveMessages = wipeKill(kill, waveMessages)
 
 	-- SCORE
-	local text = tostring(score)
+	local text = tostring(SCORE)
 	local X = 4; local Y = 2
 
 	setColor(129,151,150)

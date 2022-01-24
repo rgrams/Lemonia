@@ -1,18 +1,20 @@
 
 local Menu = {}
 
+local gameLayer
+local bg = love.graphics.newImage("data/images/background.png")
+
+local bOffset = 60
+local BUTTON_AGAIN = {x = 4, y = 4 + bOffset, text = "Play", animation = 0}
+local BUTTON_TWITTER = {x = 4, y = 16 + bOffset, text = "Twitter", animation = 0}
+local BUTTON_SITE = {x = 4, y = 28 + bOffset, text = "Homepage", animation = 0}
+local BUTTON_QUIT = {x = 4, y = 40 + bOffset, text = "Quit", animation = 0}
+
+local MOUSE = love.graphics.newImage("data/images/mouse/mouseMiddle.png")
+local MOUSE_OUTER = love.graphics.newImage("data/images/mouse/mouseOuter.png")
+
 function Menu.Reload()
 	gameLayer = love.graphics.newCanvas(200,150)
-
-	bg = love.graphics.newImage("data/images/background.png")
-	local bOffset = 60
-	BUTTON_AGAIN = {x = 4, y = 4 + bOffset, text = "Play", animation = 0}
-	BUTTON_TWITTER = {x = 4, y = 16 + bOffset, text = "Twitter", animation = 0}
-	BUTTON_SITE = {x = 4, y = 28 + bOffset, text = "Homepage", animation = 0}
-	BUTTON_QUIT = {x = 4, y = 40 + bOffset, text = "Quit", animation = 0}
-
-	MOUSE = love.graphics.newImage("data/images/mouse/mouseMiddle.png")
-	MOUSE_OUTER = love.graphics.newImage("data/images/mouse/mouseOuter.png")
 end
 
 function Menu.Die()

@@ -1,15 +1,20 @@
 
 local DeathScreen = {}
 
+local gameLayer
+local bg = love.graphics.newImage("data/images/background.png")
+
+local bOffset = 60
+local BUTTON_AGAIN = {x = 4, y = 4 + bOffset, text = "Again", animation = 0}
+local BUTTON_TWITTER = {x = 4, y = 16 + bOffset, text = "Twitter", animation = 0}
+local BUTTON_SITE = {x = 4, y = 28 + bOffset, text = "Homepage", animation = 0}
+local BUTTON_QUIT = {x = 4, y = 40 + bOffset, text = "Quit", animation = 0}
+
+local MOUSE = love.graphics.newImage("data/images/mouse/mouseMiddle.png")
+local MOUSE_OUTER = love.graphics.newImage("data/images/mouse/mouseOuter.png")
+
 function DeathScreen.Reload()
 	gameLayer = love.graphics.newCanvas(200,150)
-
-	local bOffset = 60
-	BUTTON_AGAIN = {x = 4, y = 4 + bOffset, text = "Again", animation = 0}
-	BUTTON_TWITTER = {x = 4, y = 16 + bOffset, text = "Twitter", animation = 0}
-	BUTTON_SITE = {x = 4, y = 28 + bOffset, text = "Homepage", animation = 0}
-	BUTTON_QUIT = {x = 4, y = 40 + bOffset, text = "Quit", animation = 0}
-
 end
 
 function DeathScreen.Die()
@@ -164,7 +169,7 @@ function DeathScreen.Update()
 	drawSprite(MOUSE, xM, yM)
 	drawSprite(MOUSE_OUTER, xM, yM)
 
-	local text = ""..score; local X = 4; local Y = 24
+	local text = ""..SCORE; local X = 4; local Y = 24
 	setColor(32,46,55)
 	love.graphics.print(text, X - 2, Y, 0, 2, 2)
 	love.graphics.print(text, X + 2, Y, 0, 2, 2)

@@ -1,11 +1,28 @@
 
 local SplashScreen = {}
 
+local timer
+local GRAVITY
+local shouldFall
+local squash
+local flash
+local titleRotation
+local TITLE
+local titleY
+local STOMP_PARTICLES
+local TUNE
+
 function SplashScreen.Reload()
-	timer = 5; GRAVITY = 540; shouldFall = 1; squash = newVec(1,1); flash = 0; titleRotation = 1
-	TITLE = love.graphics.newImage("data/images/splashScreen/title.png"); titleY = -80
-	STOMP_PARTICLES = newParticleSystem(400,325,loadJson("data/particles/splashScreen/splashScreenParticles.json"))
-	TUNE = love.audio.newSource("data/sound/SFX/splashScreen/intro.wav","stream")
+	timer = 5
+	GRAVITY = 540
+	shouldFall = 1
+	squash = newVec(1, 1)
+	flash = 0
+	titleRotation = 1
+	TITLE = love.graphics.newImage("data/images/splashScreen/title.png")
+	titleY = -80
+	STOMP_PARTICLES = newParticleSystem(400, 325, loadJson("data/particles/splashScreen/splashScreenParticles.json"))
+	TUNE = love.audio.newSource("data/sound/SFX/splashScreen/intro.wav", "stream")
 	TUNE:play()
 end
 
