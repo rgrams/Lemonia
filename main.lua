@@ -158,24 +158,8 @@ end
 
 -- Display resizing
 function love.resize(w, h)
-	-- Clamp
-	if w < viewArea.w then
-		w = viewArea.w
-	end
-	if h < viewArea.h then
-		h = viewArea.h
-	end
-
-	-- Set display scale
-	if w < h then
-		displayScale = w/viewArea.w
-	else
-		displayScale = h/viewArea.h
-	end
-
-	-- Set window
-	love.window.width = w
-	love.window.height = h
+	-- Scale down to fit window while maintaining aspect ratio
+	displayScale = math.min(w/viewArea.w, h/viewArea.h)
 end
 
 -- Keyboard
