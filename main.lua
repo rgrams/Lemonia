@@ -5,6 +5,7 @@ local curScene
 local startingScene = "menu"
 local displayScale = 1
 local viewArea = { w = 800, h = 600 }
+local sound
 
 _G.VIEW_ASPECT_RATIO = viewArea.w/viewArea.h
 _G.GLOBAL_TIMER = 0
@@ -35,6 +36,7 @@ function love.load()
 
 	-- Audio
 	love.audio.setVolume(0.1)
+	sound = require("data.scripts.audio") -- load audio sources
 
 	-- Imports
 	require "data.scripts.misc"
@@ -141,7 +143,7 @@ function love.draw()
 		changeFullscreen()
 	end
 
-	processSound()
+	sound.update()
 
 	-- Reset input
 	lastKeyPressed = "none"

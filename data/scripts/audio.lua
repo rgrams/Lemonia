@@ -1,28 +1,60 @@
 
-SOUNDS = {
+local sound = {}
+
+local sources = {
 	shoot = love.audio.newSource("data/sound/SFX/shoot.wav", "stream"),
 	enemyHit = love.audio.newSource("data/sound/SFX/enemyHit.wav", "stream"),
 	enemyDie = love.audio.newSource("data/sound/SFX/enemyDie.wav", "stream"),
 	playerHit = love.audio.newSource("data/sound/SFX/playerStolen.wav", "stream"),
-	playerDie = love.audio.newSource("data/sound/SFX/playerDie.wav", "stream")
+	playerDie = love.audio.newSource("data/sound/SFX/playerDie.wav", "stream"),
+	music = love.audio.newSource("data/sound/music/music.wav", "stream")
 }
 
-SOUNDS_NUM_PLAYING = {}
-for id,S in pairs(SOUNDS) do SOUNDS_NUM_PLAYING[id] = 0 end
+local activeSounds = {}
 
-SOUNDS_PLAYING = {}
+local activeSoundCount = {}
+for name,snd in pairs(sources)do
+	activeSoundCount[name] = 0
+end
 
-function playSound(string, pitch, maxPlays)
-	if (maxs or 99) > SOUNDS_NUM_PLAYING[string]  then
-		local pitch = pitch or 1
-		local NEW_SOUND = SOUNDS[string]:clone(); NEW_SOUND:setPitch(pitch); NEW_SOUND:play()
-		table.insert(SOUNDS_PLAYING,{NEW_SOUND, string})
-		SOUNDS_NUM_PLAYING[string] = SOUNDS_NUM_PLAYING[string] + 1
+local function stopSound(snd)
+	snd.isLooping = false
+	snd.voice:stop()
+end
+
+local function newSound(name, voice, isLooping)
+	return {
+		name = name,
+		voice = voice,
+		isLooping = isLooping,
+		stop = stopSound -- Needed to stop looping sounds.
+	}
+end
+
+function sound.play(name, pitch, isLooping, maxPlays)
+	if (maxPlays or 99) > activeSoundCount[name]  then
+		pitch = pitch or 1
+		local voice = sources[name]:clone()
+		voice:setPitch(pitch)
+		voice:play()
+		if isLooping then
+			voice:setLooping(true)
+		end
+		local snd = newSound(name, voice, isLooping)
+		table.insert(activeSounds, snd)
+		activeSoundCount[name] = activeSoundCount[name] + 1
+		return snd
 	end
 end
 
-function processSound()
-	for id,S in ipairs(SOUNDS_PLAYING) do
-		if not S[1]:isPlaying() then table.remove(SOUNDS_PLAYING,id); SOUNDS_NUM_PLAYING[S[2]] = SOUNDS_NUM_PLAYING[S[2]] - 1 end
+function sound.update() -- processSound
+	for i=#activeSounds,1,-1 do -- Need to iterate backwards because we're removing elements.
+		local snd = activeSounds[i]
+		if not snd.isLooping and not snd.voice:isPlaying() then
+			table.remove(activeSounds, i)
+			activeSoundCount[snd.name] = activeSoundCount[snd.name] - 1
+		end
 	end
 end
+
+return sound

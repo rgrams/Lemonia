@@ -2,6 +2,7 @@
 local Game = {}
 
 local images = require "data.scripts.images"
+local sound = require "data.scripts.audio"
 
 local gameLayer, splatLayer
 
@@ -40,7 +41,7 @@ local PARTICLES_ENEMY_HIT
 local PARTICLES_ENEMY_SPLAT
 local PARTICLES_ENEMY_DIE
 local PARTICLES_LAST_ENEMY_DIE
-local MUSIC
+local music
 
 function Game.Reload() -- Loading the scene
 	gameLayer = love.graphics.newCanvas(200,150)
@@ -98,8 +99,7 @@ function Game.Reload() -- Loading the scene
 	SCORE = 0
 
 	-- Sound
-	MUSIC = love.audio.newSource("data/sound/music/music.wav", "stream")
-	MUSIC:play()
+	music = sound.play("music", 1, true)
 
 	-- Cogs
 	cogs = {}
@@ -109,6 +109,7 @@ function Game.Reload() -- Loading the scene
 end
 
 function Game.Die()
+	music:stop()
 end
 
 local function orderY(a,b)
@@ -137,11 +138,6 @@ function Game.Update()
 	yM = yM * 0.25
 
 	sprites = {}
-
-	-- MUSIC
-	if not MUSIC:isPlaying() then
-		MUSIC:play()
-	end
 
 	-- WAVE PROCESSING
 
@@ -207,7 +203,7 @@ function Game.Update()
 		if mousePressed(1) and player.shootTimer:isDone() then
 
 			player.shootTimer:reset()
-			playSound("shoot", love.math.random(40,160) * 0.01)
+			sound.play("shoot", love.math.random(40,160) * 0.01)
 
 			local playerBullet = {
 				x = player.x + aimerOffset.x * 1.4,
@@ -223,7 +219,7 @@ function Game.Update()
 	else -- player.hp <= 0
 		deathAnimationTimer:process()
 		TRANSITION = 1 - (deathAnimationTimer.time / deathAnimationTimer.timeMax)
-		MUSIC:setVolume(deathAnimationTimer.time / deathAnimationTimer.timeMax)
+		music.voice:setVolume(deathAnimationTimer.time / deathAnimationTimer.timeMax)
 
 		if deathAnimationTimer:isDone() then
 			nextScene = "deathScreen"
@@ -232,7 +228,7 @@ function Game.Update()
 		if died == false then
 			died = true
 			table.insert(particleSystems, newParticleSystem(player.x, player.y, PARTICLES_PLAYER_DIE))
-			playSound("playerDie", 1)
+			sound.play("playerDie", 1)
 		end
 	end
 
@@ -257,7 +253,7 @@ function Game.Update()
 				E.hasItem = true
 				player.hp = player.hp - 1
 				player.iFrames = 1.5
-				playSound("playerHit", love.math.random(80,120) * 0.01)
+				sound.play("playerHit", love.math.random(80,120) * 0.01)
 				shake(8, 3, 0.075)
 			end
 		end
@@ -289,7 +285,7 @@ function Game.Update()
 
 				E.flashTimer:reset()
 
-				playSound("enemyHit", love.math.random(80,120) * 0.01)
+				sound.play("enemyHit", love.math.random(80,120) * 0.01)
 
 				local knockback = newVec(40, 0):rotate(difference:getRot() + 180)
 
@@ -310,7 +306,7 @@ function Game.Update()
 
 					table.insert(kill, id)
 
-					playSound("enemyDie", love.math.random(80,120) * 0.01)
+					sound.play("enemyDie", love.math.random(80,120) * 0.01)
 
 					local particleData = deepcopyTable(PARTICLES_ENEMY_SPLAT); particleData.rotation = B.vel:getRot()
 					print(ENEMY_COLORS[E.sprite].r)
