@@ -26,6 +26,9 @@ function love.load()
 	DISPLAY_CANVAS = love.graphics.newCanvas(viewArea.w, viewArea.h)
 	-- postProCanvas = love.graphics.newCanvas(viewArea.w, viewArea.h)
 
+	-- Textures
+	require "data.scripts.images" -- load images
+
 	-- Font
 	FONT = love.graphics.newFont("data/font.ttf", 8)
 	love.graphics.setFont(FONT)

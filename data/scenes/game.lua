@@ -1,6 +1,8 @@
 
 local Game = {}
 
+local images = require "data.scripts.images"
+
 local gameLayer, splatLayer
 
 local ENEMY_COLORS = {
@@ -10,19 +12,12 @@ local ENEMY_COLORS = {
 }
 
 local IMAGE_ENEMY = {
-	love.graphics.newImage("data/images/lemon.png"),
-	love.graphics.newImage("data/images/lemon2.png"),
-	love.graphics.newImage("data/images/lemon3.png")
+	images.enemy1,
+	images.enemy2,
+	images.enemy3
 }
 
 local IMAGE_PLAYER = loadSpritesheet("data/images/player.png", 11, 16)
-local IMAGE_PLAYER_GUN = love.graphics.newImage("data/images/shooter.png")
-local IMAGE_BULLET = love.graphics.newImage("data/images/playerBullet.png")
-local IMAGE_COG = love.graphics.newImage("data/images/cog.png")
-local bg = love.graphics.newImage("data/images/background.png")
-
-local MOUSE = love.graphics.newImage("data/images/mouse/mouseMiddle.png")
-local MOUSE_OUTER = love.graphics.newImage("data/images/mouse/mouseOuter.png")
 
 local player
 local died
@@ -52,7 +47,7 @@ function Game.Reload() -- Loading the scene
 	splatLayer = love.graphics.newCanvas(200,150)
 
 	love.graphics.setCanvas(splatLayer)
-	love.graphics.draw(bg)
+	love.graphics.draw(images.background)
 	love.graphics.setCanvas()
 
 	-- Player
@@ -206,7 +201,7 @@ function Game.Update()
 		local aimerRotation = newVec(xM - player.x, yM - player.y):getRot()
 		aimerOffset:rotate(aimerRotation)
 
-		addSprite(IMAGE_PLAYER_GUN, player.x + aimerOffset.x, player.y + aimerOffset.y, 1, 1, aimerRotation / 180 * 3.14)
+		addSprite(images.playerGun, player.x + aimerOffset.x, player.y + aimerOffset.y, 1, 1, aimerRotation / 180 * 3.14)
 
 		-- Shooting
 		if mousePressed(1) and player.shootTimer:isDone() then
@@ -277,7 +272,7 @@ function Game.Update()
 
 		addSprite(IMAGE_ENEMY[E.sprite], E.x, E.y, boolToInt(dir.x > 0) * 2 - 1, 1, E.flashTimer.time, boolToInt(E.flashTimer.time > 0.5))
 		if E.hasItem then
-			addSprite(IMAGE_COG, E.x, E.y - 12, 1, 1)
+			addSprite(images.cog, E.x, E.y - 12, 1, 1)
 		end
 
 		local bulletKill = {}
@@ -349,7 +344,7 @@ function Game.Update()
 
 	local kill = {}
 	for id, C in ipairs(cogs) do
-		addSprite(IMAGE_COG, C.x, C.y + math.sin(GLOBAL_TIMER * 3) * 2, 1, 1, 0)
+		addSprite(images.cog, C.x, C.y + math.sin(GLOBAL_TIMER * 3) * 2, 1, 1, 0)
 
 		if newVec(player.x - C.x, player.y - C.y):getLen() < 16 then
 			player.hp = player.hp + 1
@@ -390,7 +385,7 @@ function Game.Update()
 		B.x = B.x + B.vel.x * dt; B.y = B.y + B.vel.y * dt
 
 		-- Draw bullet
-		drawSprite(IMAGE_BULLET, B.x, B.y, 1, 1, B.vel:getRot() / 180 * 3.14)
+		drawSprite(images.playerBullet, B.x, B.y, 1, 1, B.vel:getRot() / 180 * 3.14)
 
 		-- Kill bullets offscreen
 		if B.x < -8 or B.x > 208 or B.y < -8 or B.y > 158 then table.insert(kill, id) end
@@ -507,8 +502,8 @@ function Game.Update()
 
 	-- MOUSE
 	setColor(255, 255, 255)
-	drawSprite(MOUSE, xM, yM)
-	drawSprite(MOUSE_OUTER, xM, yM, 1, 1, player.shootTimer.time / player.shootTimer.timeMax * 1.57)
+	drawSprite(images.mouse, xM, yM)
+	drawSprite(images.mouseOuter, xM, yM, 1, 1, player.shootTimer.time / player.shootTimer.timeMax * 1.57)
 
 	-- Draw the layer to the display (the layer is smaller size and gets scaled so the game is pixel perfect)
 	love.graphics.setCanvas(DISPLAY_CANVAS)

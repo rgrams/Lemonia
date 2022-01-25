@@ -1,17 +1,15 @@
 
 local Menu = {}
 
+local images = require "data.scripts.images"
+
 local gameLayer
-local bg = love.graphics.newImage("data/images/background.png")
 
 local bOffset = 60
 local BUTTON_AGAIN = {x = 4, y = 4 + bOffset, text = "Play", animation = 0}
 local BUTTON_TWITTER = {x = 4, y = 16 + bOffset, text = "Twitter", animation = 0}
 local BUTTON_SITE = {x = 4, y = 28 + bOffset, text = "Homepage", animation = 0}
 local BUTTON_QUIT = {x = 4, y = 40 + bOffset, text = "Quit", animation = 0}
-
-local MOUSE = love.graphics.newImage("data/images/mouse/mouseMiddle.png")
-local MOUSE_OUTER = love.graphics.newImage("data/images/mouse/mouseOuter.png")
 
 function Menu.Reload()
 	gameLayer = love.graphics.newCanvas(200,150)
@@ -28,7 +26,7 @@ function Menu.Update()
 	love.graphics.setCanvas(gameLayer)
 
 	setColor(255, 255, 255)
-	love.graphics.draw(bg)
+	love.graphics.draw(images.background)
 
 	-- BUTTONS
 	local text = BUTTON_AGAIN.text; local X = BUTTON_AGAIN.x + BUTTON_AGAIN.animation * 12; local Y = BUTTON_AGAIN.y
@@ -155,8 +153,8 @@ function Menu.Update()
 	love.graphics.print(text, X, Y, 0, 2, 2)
 
 	setColor(255, 255, 255)
-	drawSprite(MOUSE, xM, yM)
-	drawSprite(MOUSE_OUTER, xM, yM)
+	drawSprite(images.mouse, xM, yM)
+	drawSprite(images.mouseOuter, xM, yM)
 
 	-- Draw the layer to the display (the layer is smaller size and gets scaled so the game is pixel perfect)
 	love.graphics.setCanvas(DISPLAY_CANVAS)
