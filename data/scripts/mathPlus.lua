@@ -57,9 +57,9 @@ function moveRect(rect,motion,collidesWith)
 	for id,R in pairs(collided) do
 		if motion.x < 0 then
 			rect.x = R.x + R.w * 0.5 + rect.w * 0.5; rect.touching.x = -1
-		else if motion.x > 0 then
+		elseif motion.x > 0 then
 			rect.x = R.x - R.w * 0.5 - rect.w * 0.5; rect.touching.x = 1
-		end end
+		end
 	end
 
 	-- Move y
@@ -72,9 +72,9 @@ function moveRect(rect,motion,collidesWith)
 	for id,R in pairs(collided) do
 		if motion.y < 0 then
 			rect.y = R.y + R.h * 0.5 + rect.h * 0.5; rect.touching.y = -1
-		else if motion.y > 0 then
+		elseif motion.y > 0 then
 			rect.y = R.y - R.h * 0.5 - rect.h * 0.5; rect.touching.y = 1
-		end end
+		end
 	end
 
 	return rect

@@ -1,6 +1,8 @@
 
 local SplashScreen = {}
 
+local shaders = require "data.scripts.shaders"
+
 local timer
 local GRAVITY
 local shouldFall
@@ -51,8 +53,8 @@ function SplashScreen.Update(dt)
 	local scale = clamp(titleY,0,300)/300
 	love.graphics.ellipse("fill",400,320,160*scale,20*scale)
 
-	SHADERS.FLASH:send("intensity",flash)
-	love.graphics.setShader(SHADERS.FLASH)
+	shaders.fx.FLASH:send("intensity",flash)
+	love.graphics.setShader(shaders.fx.FLASH)
 	love.graphics.draw(TITLE,400,titleY,titleRotation*clamp(timer-4.65,0,1),squash.x,squash.y,TITLE:getWidth()*0.5,TITLE:getHeight()*0.5)
 	love.graphics.setShader()
 

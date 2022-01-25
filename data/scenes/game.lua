@@ -3,6 +3,7 @@ local Game = {}
 
 local images = require "data.scripts.images"
 local sound = require "data.scripts.audio"
+local shaders = require "data.scripts.shaders"
 
 local gameLayer, splatLayer
 
@@ -355,10 +356,10 @@ function Game.Update(dt)
 	table.sort(sprites, orderY)
 
 	-- Draw
-	love.graphics.setShader(SHADERS.FLASH)
+	love.graphics.setShader(shaders.fx.FLASH)
 
 	for id, S in ipairs(sprites) do
-		SHADERS.FLASH:send("intensity", S.flash or 0)
+		shaders.fx.FLASH:send("intensity", S.flash or 0)
 
 		love.graphics.setColor(S.r, S.g, S.b, S.a)
 

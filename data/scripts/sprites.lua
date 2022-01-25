@@ -1,12 +1,13 @@
 
-SPRSCL = 1
+local SPRSCL = 1
 
 -- Spritesheets
 
 function loadSpritesheet(filename,w,h)
-	local h = h or w
+	h = h or w
 	local sheet = love.graphics.newImage(filename)
-	local x = sheet:getWidth()/w; local y = sheet:getHeight()/h
+	local x = sheet:getWidth()/w
+	local y = sheet:getHeight()/h
 
 	local images = {}
 	for i=0,x do table.insert(images,{}) end
@@ -21,10 +22,12 @@ function loadSpritesheet(filename,w,h)
 end
 
 function drawFrame(spritesheet,X,Y,x,y,sx,sy,r)
-	local sx = sx or 1; local sy = sy or 1; local r = r or 0
+	sx = sx or 1
+	sy = sy or 1
+	r = r or 0
 
 	local quad = spritesheet[tostring(X)..","..tostring(Y)]
-	local qx,qy,qw,qh = quad:getViewport()
+	local qx, qy, qw, qh = quad:getViewport()
 
 	love.graphics.draw(spritesheet.texture,quad,x-camera[1],y-camera[2],r,SPRSCL*sx,SPRSCL*sy, round(qw * 0.5), round(qh * 0.5))
 end
@@ -32,10 +35,9 @@ end
 -- Sprites
 
 function drawSprite(tex, x, y, sx, sy, r)
-
-	local sx = sx or 1
-	local sy = sy or 1
-	local r = r or 0
+	sx = sx or 1
+	sy = sy or 1
+	r = r or 0
 
 	love.graphics.draw(tex, math.floor(x - camera[1]), math.floor(y - camera[2]), r, SPRSCL * sx, SPRSCL * sy, math.floor(tex:getWidth() * 0.5 + 0.5), math.floor(tex:getHeight() * 0.5 + 0.5))
 end

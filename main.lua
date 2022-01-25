@@ -98,17 +98,20 @@ function love.draw()
 	w, h = love.graphics.getDimensions()
 	dw, dh = DISPLAY_CANVAS:getDimensions()
 
+	-- Clamp mouse to view area (reverse scale canvas size)
 	xM = clamp(xM, w*0.5-dw*0.5*displayScale, w*0.5+dw*0.5*displayScale)
 	yM = clamp(yM, h*0.5-dh*0.5*displayScale, h*0.5+dh*0.5*displayScale)
+	-- Center mouse pos.
 	xM = xM - (w*0.5-dw*0.5*displayScale)
 	yM = yM - (h*0.5-dh*0.5*displayScale)
+	-- Scale mouse pos down to canvas pixel size.
 	xM = xM/displayScale
 	yM = yM/displayScale
 
 	-- Bg and canvas resetting
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.setCanvas(DISPLAY_CANVAS)
-	love.graphics.clear(0,0,0,1)
+	love.graphics.clear(0, 0, 0, 1)
 
 	--------------------------------------------------------------------------SCENE CALLED
 	local nextScene = scenes[curScene].Update(dt)
