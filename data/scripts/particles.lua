@@ -65,7 +65,7 @@ function newParticleSystem(x,y,data)
 	return data
 end
 
-function processParticleSystem(particleSystem)
+function processParticleSystem(particleSystem, dt)
 	particleSystem.timer = particleSystem.timer - dt
 
 	if particleSystem.timer < 0 and particleSystem.ticks ~= 0 then

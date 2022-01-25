@@ -7,7 +7,7 @@ end
 function BlankScene.Die()
 end
 
-function BlankScene.Update()
+function BlankScene.Update(dt)
 	-- Reset
 	local nextScene = "blank"
 

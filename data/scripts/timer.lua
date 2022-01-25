@@ -1,5 +1,5 @@
 
-function processTimer(timer)
+function processTimer(timer, dt)
 	timer.time = clamp(timer.time - dt * boolToInt(timer.playing), 0, timer.timeMax)
 end
 

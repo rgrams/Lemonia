@@ -30,7 +30,7 @@ function SplashScreen.Die()
 	TITLE = nil
 end
 
-function SplashScreen.Update()
+function SplashScreen.Update(dt)
 	-- Reset
 	local nextScene = "splash"
 
@@ -45,7 +45,7 @@ function SplashScreen.Update()
 	local speed = 15
 	squash.x = lerp(squash.x,1,dt*speed); squash.y = lerp(squash.y,1,dt*speed); flash = lerp(flash,0,dt*speed*0.5)
 
-	STOMP_PARTICLES:process()
+	STOMP_PARTICLES:process(dt)
 
 	setColor(0, 0, 0, 60)
 	local scale = clamp(titleY,0,300)/300

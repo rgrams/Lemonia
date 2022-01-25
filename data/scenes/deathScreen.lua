@@ -19,7 +19,7 @@ end
 function DeathScreen.Die()
 end
 
-function DeathScreen.Update()
+function DeathScreen.Update(dt)
 	local nextScene = "deathScreen"
 
 	xM = xM * 0.25

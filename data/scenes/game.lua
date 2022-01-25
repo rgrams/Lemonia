@@ -126,7 +126,7 @@ local function addAnimatedSprite(spritesheet, X, Y, x, y, sx, sy, rot, flash)
 	table.insert(sprites, {spritesheet = spritesheet, X = X, Y = Y, x = x, y = y, sx = sx, sy = sy, rot = rot, animated = true, flash = flash or 0,r=r,g=g,b=b,a=a})
 end
 
-function Game.Update()
+function Game.Update(dt)
 	-- RESET
 	local nextScene = "game"
 
@@ -181,13 +181,13 @@ function Game.Update()
 
 		local moving = (math.abs(player.vel.x) + math.abs(player.vel.y)) / player.speed
 
-		player.shootTimer:process()
+		player.shootTimer:process(dt)
 
 		-- Drawing
 		PARTICLES_PLAYER_WALK.x = player.x
 		PARTICLES_PLAYER_WALK.y = player.y + 8
 		PARTICLES_PLAYER_WALK.ticks = round(moving)
-		PARTICLES_PLAYER_WALK:process()
+		PARTICLES_PLAYER_WALK:process(dt)
 
 		setColor(255, 255, 255, 255 * (1 - math.abs(math.sin(player.iFrames / 1.15 * 3.14 * 5))))
 		addAnimatedSprite(IMAGE_PLAYER, 6 - player.hp, 1, player.x, player.y, boolToInt(xM > player.x) * 2 - 1, 1, math.sin(GLOBAL_TIMER * 12) * 0.2 * moving)
@@ -217,7 +217,7 @@ function Game.Update()
 			--shake(2, 1, 0.1)
 		end
 	else -- player.hp <= 0
-		deathAnimationTimer:process()
+		deathAnimationTimer:process(dt)
 		TRANSITION = 1 - (deathAnimationTimer.time / deathAnimationTimer.timeMax)
 		music.voice:setVolume(deathAnimationTimer.time / deathAnimationTimer.timeMax)
 
@@ -264,7 +264,7 @@ function Game.Update()
 		E.x = E.x + (dir.x + E.knockback.x) * dt
 		E.y = E.y + (dir.y + E.knockback.y) * dt
 
-		E.flashTimer:process()
+		E.flashTimer:process(dt)
 
 		addSprite(IMAGE_ENEMY[E.sprite], E.x, E.y, boolToInt(dir.x > 0) * 2 - 1, 1, E.flashTimer.time, boolToInt(E.flashTimer.time > 0.5))
 		if E.hasItem then
@@ -394,7 +394,7 @@ function Game.Update()
 	for id, P in ipairs(particleSystems) do
 
 		-- Process particle system
-		P:process()
+		P:process(dt)
 
 		-- Kill if it is done
 		if P.ticks == 0 and #P.particles == 0 then table.insert(kill, id) end
@@ -407,7 +407,7 @@ function Game.Update()
 	for id, P in ipairs(lemonSplatParticleSystems) do
 
 		-- Process particle system
-		P:process()
+		P:process(dt)
 
 		-- Kill if it is done
 		if P.ticks == 0 and #P.particles == 0 then table.insert(kill, id) end

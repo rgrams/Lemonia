@@ -11,8 +11,8 @@ function bindCamera(x,y)
 	boundCamPos = {x,y}
 end
 
-function processCamera()
-	shakeTimer:process()
+function processCamera(dt)
+	shakeTimer:process(dt)
 
 	if shakeTimer:isDone() then
 		if shakes > 0 then

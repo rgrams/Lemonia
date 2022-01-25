@@ -19,7 +19,7 @@ end
 function Menu.Die()
 end
 
-function Menu.Update()
+function Menu.Update(dt)
 	local nextScene = "menu"
 
 	xM = xM * 0.25

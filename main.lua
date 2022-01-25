@@ -89,7 +89,7 @@ end
 -- Play scenes
 function love.draw()
 	-- Time and resetting
-	dt = love.timer.getDelta()
+	local dt = love.timer.getDelta()
 	GLOBAL_TIMER = GLOBAL_TIMER + dt
 
 	-- Mouse pos
@@ -111,7 +111,7 @@ function love.draw()
 	love.graphics.clear(0,0,0,1)
 
 	--------------------------------------------------------------------------SCENE CALLED
-	local nextScene = scenes[curScene].Update()
+	local nextScene = scenes[curScene].Update(dt)
 
 	if nextScene ~= curScene then
 		scenes[curScene].Die()
@@ -126,7 +126,7 @@ function love.draw()
 		TRANSITION = clamp(TRANSITION - dt, 0, 1)
 	end
 
-	processCamera()
+	processCamera(dt)
 
 	love.graphics.setColor(1, 1, 1, 1)
 
