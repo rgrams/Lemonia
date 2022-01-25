@@ -4,6 +4,7 @@ local Game = {}
 local images = require "data.scripts.images"
 local sound = require "data.scripts.audio"
 local shaders = require "data.scripts.shaders"
+local camera = require "data.scripts.camera"
 
 local gameLayer, splatLayer
 
@@ -215,7 +216,7 @@ function Game.Update(dt)
 
 			table.insert(particleSystems, newParticleSystem(player.x + aimerOffset.x * 1.4, player.y + aimerOffset.y * 1.4, deepcopyTable(PARTICLES_PLAYER_SHOOT)))
 
-			--shake(2, 1, 0.1)
+			--camera.shake(2, 1, 0.1)
 		end
 	else -- player.hp <= 0
 		deathAnimationTimer:process(dt)
@@ -255,7 +256,7 @@ function Game.Update(dt)
 				player.hp = player.hp - 1
 				player.iFrames = 1.5
 				sound.play("playerHit", love.math.random(80,120) * 0.01)
-				shake(8, 3, 0.075)
+				camera.shake(8, 3, 0.075)
 			end
 		end
 
@@ -282,7 +283,7 @@ function Game.Update(dt)
 				E.hp = E.hp - 1
 
 				-- Juice
-				--shake(3, 2, 0.1)
+				--camera.shake(3, 2, 0.1)
 
 				E.flashTimer:reset()
 
@@ -303,7 +304,7 @@ function Game.Update(dt)
 					SCORE = SCORE + 100
 					table.insert(scoreMessages, {message = ""..tostring(100), x = E.x, y = E.y - 12, lifetime = 0.8})
 
-					--shake(5, 2, 0.1)
+					--camera.shake(5, 2, 0.1)
 
 					table.insert(kill, id)
 
@@ -327,7 +328,7 @@ function Game.Update(dt)
 
 					if #enemies - #kill == 0 then
 						table.insert(particleSystems, newParticleSystem(B.x, B.y, deepcopyTable(PARTICLES_LAST_ENEMY_DIE)))
-						shake(7, 2, 0.1)
+						camera.shake(7, 2, 0.1)
 					end
 					break
 				end

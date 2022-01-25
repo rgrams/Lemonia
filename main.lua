@@ -1,4 +1,5 @@
 
+
 local isFullscreen = false
 local scenes
 local curScene
@@ -6,6 +7,7 @@ local startingScene = "menu"
 local displayScale = 1
 local viewArea = { w = 800, h = 600 }
 local sound
+local camera
 
 _G.VIEW_ASPECT_RATIO = viewArea.w/viewArea.h
 _G.GLOBAL_TIMER = 0
@@ -48,8 +50,9 @@ function love.load()
 	require "data.scripts.particles"
 	require "data.scripts.tiles"
 	require "data.scripts.timer"
-	require "data.scripts.camera"
 	require "data.scripts.audio"
+
+	camera = require "data.scripts.camera"
 
 	-- Mouse
 	love.mouse.setVisible(false)
@@ -95,15 +98,21 @@ function love.draw()
 	-- Mouse pos
 	xM, yM = love.mouse.getPosition()
 
-	w, h = love.graphics.getDimensions()
-	dw, dh = DISPLAY_CANVAS:getDimensions()
+	local w, h = love.graphics.getDimensions()
+
+	local viewportWidth = viewArea.w*displayScale
+	local viewportHeight = viewArea.h*displayScale
+	local viewportLeft = w/2 - viewportWidth/2
+	local viewportTop = h/2 - viewportHeight/2
+	local viewportRight = w/2 + viewportWidth/2
+	local viewportBottom = h/2 + viewportHeight/2
 
 	-- Clamp mouse to view area (reverse scale canvas size)
-	xM = clamp(xM, w*0.5-dw*0.5*displayScale, w*0.5+dw*0.5*displayScale)
-	yM = clamp(yM, h*0.5-dh*0.5*displayScale, h*0.5+dh*0.5*displayScale)
+	xM = clamp(xM, viewportLeft, viewportRight)
+	yM = clamp(yM, viewportTop, viewportBottom)
 	-- Center mouse pos.
-	xM = xM - (w*0.5-dw*0.5*displayScale)
-	yM = yM - (h*0.5-dh*0.5*displayScale)
+	xM = xM - viewportLeft
+	yM = yM - viewportTop
 	-- Scale mouse pos down to canvas pixel size.
 	xM = xM/displayScale
 	yM = yM/displayScale
@@ -115,6 +124,8 @@ function love.draw()
 
 	--------------------------------------------------------------------------SCENE CALLED
 	local nextScene = scenes[curScene].Update(dt)
+
+	camera.update(dt)
 
 	if nextScene ~= curScene then
 		scenes[curScene].Die()
@@ -129,17 +140,16 @@ function love.draw()
 		TRANSITION = clamp(TRANSITION - dt, 0, 1)
 	end
 
-	processCamera(dt)
-
 	love.graphics.setColor(1, 1, 1, 1)
 
 	-- Draw display
 	love.graphics.setCanvas()
 
-	love.graphics.draw(DISPLAY_CANVAS, w*0.5-dw*0.5*displayScale + screenshake[1] * displayScale, h*0.5-dh*0.5*displayScale + screenshake[2] * displayScale, 0, displayScale, displayScale)
+	local shakeX, shakeY = camera.getShakeOffset()
+	love.graphics.draw(DISPLAY_CANVAS, viewportLeft + shakeX * displayScale, viewportTop + shakeY * displayScale, 0, displayScale, displayScale)
 
 	love.graphics.setColor(1, 0, 1, 1)
-	-- resetLights()
+	-- shaders.resetLights()
 
 	-- Check for fullscreen
 	if justPressed("f1") then

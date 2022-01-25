@@ -2,18 +2,18 @@
 -- DRAW PARTICLES
 
 local function drawParticleCircle(P,w)
-	love.graphics.circle("fill",P.x - camera[1],P.y - camera[2],w)
+	love.graphics.circle("fill", P.x, P.y, w)
 end
 
 local function drawParticleCircleGlow(P,w)
-	love.graphics.circle("fill",P.x - camera[1],P.y - camera[2],w)
+	love.graphics.circle("fill", P.x, P.y, w)
 	love.graphics.setColor(P.color.r,P.color.g,P.color.b,P.color.a*0.4)
-	love.graphics.circle("fill",P.x - camera[1],P.y - camera[2],w * 1.4)
+	love.graphics.circle("fill", P.x, P.y, w * 1.4)
 end
 
 local function drawParticleSquare(P,w)
 	local offset = w*0.5
-	love.graphics.rectangle("fill",P.x-offset - camera[1],P.y-offset - camera[2],w,w)
+	love.graphics.rectangle("fill", P.x-offset, P.y-offset, w, w)
 end
 
 local DRAWS = {

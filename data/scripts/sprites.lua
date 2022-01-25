@@ -29,7 +29,7 @@ function drawFrame(spritesheet,X,Y,x,y,sx,sy,r)
 	local quad = spritesheet[tostring(X)..","..tostring(Y)]
 	local qx, qy, qw, qh = quad:getViewport()
 
-	love.graphics.draw(spritesheet.texture,quad,x-camera[1],y-camera[2],r,SPRSCL*sx,SPRSCL*sy, round(qw * 0.5), round(qh * 0.5))
+	love.graphics.draw(spritesheet.texture,quad,x,y,r,SPRSCL*sx,SPRSCL*sy, round(qw * 0.5), round(qh * 0.5))
 end
 
 -- Sprites
@@ -39,5 +39,5 @@ function drawSprite(tex, x, y, sx, sy, r)
 	sy = sy or 1
 	r = r or 0
 
-	love.graphics.draw(tex, math.floor(x - camera[1]), math.floor(y - camera[2]), r, SPRSCL * sx, SPRSCL * sy, math.floor(tex:getWidth() * 0.5 + 0.5), math.floor(tex:getHeight() * 0.5 + 0.5))
+	love.graphics.draw(tex, math.floor(x), math.floor(y), r, SPRSCL * sx, SPRSCL * sy, math.floor(tex:getWidth() * 0.5 + 0.5), math.floor(tex:getHeight() * 0.5 + 0.5))
 end

@@ -1,19 +1,28 @@
 
-camera = {0, 0}
-local boundCamPos = {0, 0}
+-- NOTE: Most of this is not actually used/doesn't do anything.
+--       Only the screenshake is used.
+
+local camera = {}
+
+local camPos = { x = 0, y = 0 }
+local boundCamPos = { x = 0, y = 0 }
 
 local lerpSpeed = 10
 
 local shakeStr = 0
 local shakes = 0
 local shakeTimer = newTimer(0)
-screenshake = {0, 0}
+local screenshake = { x = 0, y = 0 }
 
-function bindCamera(x,y)
-	boundCamPos = {x,y}
+function camera.getShakeOffset()
+	return screenshake.x, screenshake.y
 end
 
-function processCamera(dt)
+function camera.bind(x, y)
+	boundCamPos.x, boundCamPos.y = x, y
+end
+
+function camera.update(dt)
 	shakeTimer:process(dt)
 
 	if shakeTimer:isDone() then
@@ -22,20 +31,20 @@ function processCamera(dt)
 
 			shakeTimer:reset()
 
-			screenshake = {love.math.random(-shakeStr,shakeStr),love.math.random(-shakeStr,shakeStr)}
+			screenshake.x = love.math.random(-shakeStr,shakeStr)
+			screenshake.y = love.math.random(-shakeStr,shakeStr)
 		else
 			shakeStr = 0
-			screenshake = {0, 0}
+			screenshake.x = 0
+			screenshake.y = 0
 		end
 	end
 
-	camera[1] = lerp(camera[1],boundCamPos[1],dt*lerpSpeed)
-	camera[2] = lerp(camera[2],boundCamPos[2],dt*lerpSpeed)
+	camPos.x = lerp(camPos.x, boundCamPos.x, dt*lerpSpeed)
+	camPos.y = lerp(camPos.y, boundCamPos.y, dt*lerpSpeed)
 end
 
--- Screenshake
-
-function shake(shakeStrNew, shakesNew, time)
+function camera.shake(shakeStrNew, shakesNew, time)
 	if shakeStr <= shakeStrNew then
 		shakeStr = shakeStrNew
 		shakes = shakesNew
@@ -44,6 +53,8 @@ function shake(shakeStrNew, shakesNew, time)
 	end
 end
 
-function lockScreenshake(bool)
+function camera.lockScreenshake(bool)
 	shakeTimer.playing = bool
 end
+
+return camera
