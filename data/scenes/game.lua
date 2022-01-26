@@ -9,7 +9,10 @@ function gameReload() -- Loading the scene
     love.graphics.setCanvas(splatLayer)
     love.graphics.draw(love.graphics.newImage("data/images/background.png"))
     love.graphics.setCanvas()
-
+    
+    -- Enemy spray disappear over time
+    bg = love.graphics.newImage("data/images/background.png")
+    
     -- Images
     IMAGE_ENEMY = {love.graphics.newImage("data/images/lemon.png"), love.graphics.newImage("data/images/lemon2.png"), love.graphics.newImage("data/images/lemon3.png")}
 
@@ -103,6 +106,9 @@ function game()
     xM = xM * 0.25; yM = yM * 0.25
 
     sprites = {}
+
+
+    -- Enemy spray disappear over time
 
     -- MUSIC
     if not MUSIC:isPlaying() then MUSIC:play() end
