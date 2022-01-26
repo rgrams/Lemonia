@@ -1,4 +1,5 @@
 
+
 local Game = {}
 
 local images = require "data.scripts.images"
@@ -117,6 +118,7 @@ end
 local function orderY(a,b)
 	return a.y > a.y
 end
+
 
 local function addSprite(tex, x, y, sx, sy, rot, flash)
 	local r, g, b, a = love.graphics.getColor()
